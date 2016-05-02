@@ -1,0 +1,36 @@
+{
+  "name": "Meet-Up-Event-Planner",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "Outsourcing",
+    "Due",
+    "diligence",
+    "Performance",
+    "Management",
+    "vendor",
+    "Management"
+  ],
+  "author": "Clive Cadogan",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.12.5",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-gh-pages": "^0.5.4",
+    "gulp-imagemin": "^2.4.0",
+    "gulp-sass": "^2.3.1"
+  },
+  "dependencies": {
+    "eslint-config-google": "^0.5.0",
+    "imagemin-pngquant": "^4.2.2"
+  }
+}
