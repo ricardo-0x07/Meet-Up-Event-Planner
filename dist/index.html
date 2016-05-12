@@ -3,634 +3,96 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Your first Backbone.js App | Tutorialzine </title>
+        <title>Meet Up Event Planner</title>
 
 
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- Google web fonts -->
-        <link href="http://fonts.googleapis.com/css?family=PT+Sans:400,700" rel='stylesheet' />
-
+        <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700" rel='stylesheet' />
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
-        <!-- Place favicon.ico in the root directory -->
-
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/smoothness/jquery-ui.css">
-
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" href="jasmine/lib/jasmine-2.1.2/jasmine.css">
-        <script src="jasmine/lib/jasmine-2.1.2/jasmine.js"></script>
-        <script src="jasmine/lib/jasmine-2.1.2/jasmine-html.js"></script>
-        <script src="jasmine/lib/jasmine-2.1.2/boot.js"></script>
+
+        <script>
+            // Only load Web Component polyfill if necessary and then load content
+            // Thanks to Rob Dodson's talk at Chrome Dev Summit 2015
+            var webComponentsSupported = ('registerElement' in document
+                && 'import' in document.createElement('link')
+                && 'content' in document.createElement('template'));
+
+            if (!webComponentsSupported) {
+                var script = document.createElement('script');
+                script.async = true;
+                script.src = '../bower_components/webcomponentsjs/webcomponents-lite.min.js';
+                script.onload = loadPolymerElements;
+                document.head.appendChild(script);
+            } else {
+                loadPolymerElements();
+            };
+
+            function loadPolymerElements() {
+                var link = document.createElement('link');
+                link.rel = 'import';
+                link.href = 'polymer-elements/elements.html'
+                link.onload = loadContent;
+                document.head.appendChild(link);
+            };
+
+            // In an actual app, this would normally be an AJAX request for JSON to be injected into
+            // template app compontents. However, in this case I just hard coded the content.
+            function loadContent() {
+                var req = new XMLHttpRequest();
+                req.open('GET', 'shell.html');
+                req.addEventListener('load', function () {
+                    // // Add Polymer specific classes to the body
+                    document.body.classList.add('fullbleed', 'layout', 'vertical');
+                    document.body.innerHTML = this.responseText;
+                    // document.body.prepend(this.responseText);
+                    // console.log('this.responseText');
+                    // console.log(this.responseText);
+                    loadScripts();
+                    // console.log(document.body.innerHTML);
+                });
+                req.send();
+            };
+
+            // In an actual app, you'd need much more robust logic to determine when and how specific
+            // scripts are injected into the page.
+            function loadScripts() {
+                console.log('loadScripts');                
+                var scripts = [
+                    {
+                        src: 'bundle.js'
+                    }
+                    // ,
+                    // {
+                    //     src: 'http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'
+                    // } 
+                ];
+                scripts.forEach(function (s) {
+                  var script = document.createElement('script');
+                  script.src = s.src;
+                  script.type = "text/javascript";
+                  if (s.attrs) {
+                      s.attrs.forEach(function (a) {
+                        script[a] = true;
+                      });
+                  };
+                  console.log(script.src)
+                  document.body.appendChild(script);
+                });
+            };
+        </script>
+
+        <!-- Place favicon.ico in the root directory -->
+
     </head>
     <body>
-        <header class="navBar"></header>
-        <div class="container main">
-        </div>
-        <footer></footer>
-
-        <!-- Templates -->
-        <script type="text/template" id="tpl_shell">
-            <!-- <div class="row"> -->
-            <div class="col-xs-3">
-
-                <aside class="sideBar">
-                    <!-- <div class="project_list_view"></div> -->
-                </aside>
-
-            </div>
-            <div class="col-xs-9">
-
-                <main class="content">
-                    <h2>Welcome to Sortyfied.com</h2>
-                    <p>This is your ultimate due diligence utility</p>
-                </main>
-
-            </div>
-            <!-- </div> -->
-        </script>
-        <script type="text/template" id="tpl_nav">
-            <nav class="navbar navbar-inverse navbar-fixed-top">
-                <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed"
-                          data-toggle="collapse" aria-expanded="false" data-Target="#myNavbar">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a href="#" class="navbar-brand nav-text" id="brand">
-                          <!-- <img src="img/logo.png" class="img-responsive logo" alt="logo image"> -->
-                          SORTYFIED
-                        </a>
-                    </div>
-                    <div class="collapse navbar-collapse" id="myNavbar">
-                        <ul class="nav navbar-nav">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle nav-text" data-toggle="dropdown"
-                                  role="button" aria-haspopup="true" aria-expanded="false">
-                                  Home
-                                  <span class="caret" aria-hidden="true"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="listMyServices">Services</a>
-                                    </li>
-                                    <li>
-                                        <a class="listMyCustomers">Customers</a>
-                                    </li>
-                                    <li>
-                                        <a class="listMyProjects">Projects</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-                                  role="button" aria-haspopup="true" aria-expanded="false">
-                                  Search
-                                  <span class="caret" aria-hidden="true"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="serviceSearch">Services</a>
-                                    </li>
-                                    <li>
-                                        <a class="customerSearch">Customers</a>
-                                    </li>
-                                    <li>
-                                        <a class="projectSearch">Projects</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-                                    role="button" aria-haspopup="true" aria-expanded="false">
-                                    New
-                                    <span class="caret" aria-hidden="true"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="newCompany">Company</a>
-                                    </li>
-                                    <li>
-                                        <a class="newProject">Project</a>
-                                    </li>
-                                    <li>
-                                        <a class="newService">Service</a>
-                                    </li>
-                                    <li>
-                                        <a class="newJob">Job</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-                                    role="button" aria-haspopup="true" aria-expanded="false">
-                                    Performance
-                                    <span class="caret" aria-hidden="true"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="assessment">
-                                            Vendor
-                                            Service Assessment
-                                            <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="vendorsByService">
-                                            Vendor Service Perfomance
-                                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="requestValidation">
-                                            Request Service Validation
-                                            <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a class="notifications" data-toggle="tooltip"
-                                    data-placement="right" title="Notifications">
-                                    <span class="glyphicon glyphicon-globe" aria-hidden="true">
-                                    </span>
-                                    <span ui:field="unread" class="badge" aria-hidden="true">
-                                    </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="feedBack" data-toggle="tooltip" data-placement="right"
-                                    title="Feedback">
-                                    <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
-                                </a>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-                                  role="button" aria-haspopup="true" aria-expanded="false">
-                                  About
-                                  <span class="caret" aria-hidden="true"></span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </script>
-        <script type="text/template" id="tpl_project_entry">
-            <h2 class="centered">"{{owner}}" - Projects</h2>
-            <div class="message_list"></div>
-            <h2>New message</div>
-            <ul>
-                <li>Author: <input class="new_message_author" type="text" /></li>
-                <li>Text: <textarea class="new_message_text" /></li>
-            </ul>
-            <input type="submit" value="Post message" />
-            </ul>
-            <div class="error_message"></div>
-            <div id="info-window">
-                <h4 data-bind="text: app.ViewModel.currentPlaceName"></h4>
-                <h6><strong>The 3 other nearby places via Yelp</strong></h6>
-                <table class="table table-striped table-condensed" id="marker-tbl">
-                    <thead>
-                        <tr>
-                            <th> Name </th>
-                            <th> Description </th>
-                            <th> Contractor </th>
-                            <th> Owner </th>
-                            <th> Lead </th>
-                            <th> Value (US$) </th>
-                            <th> Evaluation Status </th>
-                        </tr>
-                    </thead>
-                    <tbody class="tableRows"></tbody>
-                </table>
-            </div>
-        </script>
-        <script type="text/html" id="tpl_aside">
-            <div class="collapse navbar-collapse sidebar" >
-                <ul class="nav navbar-nav">
-                  <form class="navbar-form" role="search">
-                    <div >
-                      <input placeholder="Search" type="text" class="searchBox filter">
-                    </div><!-- /input-group -->
-                    </form><!-- /.navbar-form -->
-
-                    <ul class="project_list list-group" ></ul>
-
-                </ul><!-- /.navbar-nav -->
-            </div><!-- /.navbar-collapse -->
-        </script>
-        <script type="text/template" id="tpl_project_list_element">
-            <span class="projectName">{{name}}</span>
-            <span>{{description}}</span>
-            <!-- <spanspan>{{lead}}</span> -->
-            <!-- <span>{{value}}</span> -->
-            <!-- <span>{{service.name}}</span> -->
-        </script>
-        <script type="text/template" id="tpl_project">
-            <!-- <div class="row"> -->
-                <div class="col-xs-12">
-                    <form>
-                        <div class="form-group">
-                            <label for="name">Project Name *: 
-                                <input placeholder="Unit 5 Major Inspection 2020" type="text" id="name" name="name" value="{{name}}" autofocus required autocomplete="project-name"/>
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <label for="description">Description: 
-                                <input type="text" id="description" name="description" value="{{description}}"></input>
-                            </label>
-                        </div>
-                        <!-- <div class="form-group">
-                            <label for="value">Value: 
-                                <input type="number" id="value" value="{{value}}"name="value"
-                                    value="0" required></input>
-                            </label>
-                        </div> -->
-                        <div class="form-group">
-                            <label for="plannedStartDate">Planned Start Date: 
-                                <input type="date" 
-                                    id="plannedStartDate" value="{{plannedStartDate}}" required/>
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <label for="duration">Duration (calender days): 
-                                <input type="number" 
-                                    id="duration" value="{{duration}}" required/>
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <label for="service">Service: 
-                                <input class="searchBox"
-                                    placeholder="Service Search" id="service"value="{{service.name}}"></input>
-                            </label>
-                        </div>
-                        <div>
-                            <button type="submit"  id="saveProject" >Save</button>
-                        </div>
-                        <div class="form-group">
-                            <button class="delete" id="deleteProject">Delete</button>
-                        </div>
-                    </form>
-                </div>
-            <!-- </div> -->
-        </script>
-        <script type="text/template" id="tpl_signIn">
-            <!-- <div class="row"> -->
-                <div class="col-xs-12">
-                    <div class="panel panel-primary">
-                        <div class="panel-body">
-                            <div class="container-fluid">
-                                <form class="form-horizontal" id="signInForm">
-                                    <div class="form-group">
-                                        <label class="control-label col-xs-12" for="email"
-                                            res:styleName="style.blackText">
-                                            <span class="sr-only">Email:</span>
-                                            <input type="email" class="form-control box"
-                                                id="email" autofocus autocomplete="email"  data-toggle="popover" data-trigger="focus" data-placement="input" data-content="Kindly enter your email." placeholder="Kindly enter your email." />
-                                        </label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-xs-12 blackText" for="Password">
-                                            <span class="sr-only">Password:</span> 
-                                            <input class="form-control box" type="password" id="password"
-                                            placeholder="Enter password" autocomplete="password"  aria-required minlength="8"  class="form-control" data-toggle="popover" data-trigger="focus" data-placement="input" data-content="Kindly fill out this field." />
-                                        </label>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-xs-offset-2 col-xs-10">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox" id="myCheckBox" />
-                                                    <span>Remember me</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-xs-offset-2 col-xs-10">
-                                            <button class="btn btn-primary loginButton" type="primary" id="button">Login</button>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-10">
-                                            <button class="btn btn-link loginButton" type="primary" id="signUpButton">Sign Up</button>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-10">
-                                            <button class="btn btn-link" type="primary"
-                                                id="anchorForgottenPassword">Forgot your password ?</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <!-- </div> -->
-        </script>
-        <script type="text/template" id="tpl_home_marketing">
-            <!-- <div class="row"> -->
-            <div class="col-xs-12">
-                <div id="carousel-captions" class="carousel slide" data-ride="carousel">
-                    <!-- Indicators -->
-                    <ol class="carousel-indicators">
-                        <li data-target="#carousel-captions" data-slide-to="0" class="active"></li>
-                        <li data-target="#carousel-captions" data-slide-to="1"></li>
-                        <li data-target="#carousel-captions" data-slide-to="2"></li>
-                    </ol>
-                    <!-- Wrapper for slides -->
-                    <div class="carousel-inner" role="listbox">
-                        <div class="item active">
-                            <img id="imgA" width="100%" src="img/imgA.jpg" alt="Responsive image" />
-                            <div class="carousel-caption">
-                                <h3 text="Issue Management" />
-                                <p> Communicate, Track, Manage and Learn from
-                                    Service Issues.
-                                </p>
-                                <p>
-                                  <button id="signUpA" type="button" class="signUp btn btn-primary">Sign up today</button>
-                                </p>
-                                <p>
-                                  <button id="signInA" type="button" class="signIn btn btn-primary">Sign In</button> 
-                                </p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <img id="imgB" width="100%" src="img/imgB.jpg" alt="Responsive image" />
-                            <div class="carousel-caption">
-                                <h3 text="Performance Management" />
-                                <p>
-                                Drive Service Performance Improvements accross your Industry.
-                                </p>
-                                <p>
-                                  <button id="signUpB"  type="button" class="signUp btn btn-primary">Sign up today</button>
-                                </p>
-                                <p>
-                                  <button id="signInB"  type="button" class="signIn btn btn-primary">Sign In</button>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <img id="imgC" width="100%" src="img/imgC.jpg" alt="Responsive image" />
-                            <div class="carousel-caption">
-                                <h3 text="Search" />
-                                <p>
-                                    Find the right Service Providers for your Mission Critical Maintenance Projects.                                
-                                </p>
-                                <p>
-                                  <button id="signUpC" type="button" class="signUp btn btn-primary">Sign up today</button>
-                                </p>
-                                <p>
-                                  <button id="signInC" type="button" class="signIn btn btn-primary">Sign In</button>   
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Controls -->
-                    <a class="left carousel-control" href="#carousel-captions" role="button" data-slide="prev">
-                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="right carousel-control" href="#carousel-captions" role="button" data-slide="next">
-                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </div>
-            </div>
-            <!-- </div> -->
-        </script>
-        <script type="text/template" id="tpl_signUp">
-            <!-- <section class="row"> -->
-                <div size="col-xs-12">
-                    <div class="panel panel-primary">
-                        <div class="panel-body">
-                            <form id="signUpForm">
-                                <fieldset id="signUp">
-                                    <div class="form-group">
-                                        <label for="name">
-                                            <span class="sr-only">Full Name: </span>
-                                            <input type="text" id="name"autocomplete="name" autofocus required aria-describedby="name-format" minlength="5"  class="form-control" data-toggle="popover" data-trigger="focus" data-placement="input" data-content="Kindly fill out this field." placeholder="Full Name"></input>
-                                        </label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email">
-                                            <span class="sr-only">Email:</span>
-                                            <input type="email" id="email"autocomplete="email" type="email" id="email" required class="form-control" data-toggle="popover" data-trigger="focus" data-placement="input" data-content="Kindly fill out this field." placeholder="Work Email"></input>
-                                        </label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="employer">
-                                            <span class="sr-only">Employer: </span>
-                                            <input type="search"class="searchBox form-control" id="employer" placeholder="Find Employer" required data-toggle="popover" data-trigger="focus" data-placement="input" data-content="Kindly fill out this field."></input>
-                                        </label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="address"><span class="sr-only">Full Address</span>
-                                          <input id="address" onFocus="app.signUpView.geolocate()" placeholder="Full Address" required minlength="5" class="form-control" data-toggle="popover" data-trigger="focus" data-placement="input" data-content="Kindly fill out this field." ></input>
-                                        </label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="password">
-                                            <span class="sr-only">Choose a Password: </span>
-                                            <input type="password" class="form-control" id="password" placeholder="Enter password" required data-toggle="popover" data-trigger="focus" data-placement="input" data-content="Kindly fill out this field." pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"></input>
-                                        </label>
-                                    </div>
-                                    <div >
-                                        <label for="passwordConfirm">
-                                            <span class="sr-only">Confirm Password:  </span>
-                                            <input type="password" class="form-control" id="passwordConfirm"name="passwordConfirm" placeholder="Confirm password" required data-toggle="popover" data-trigger="focus" data-placement="input" data-content="Kindly fill out this field." pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"></input>
-                                        </label>
-                                    </div>
-                                    <div class="form-group">
-                                        <button class="send" id="submit"
-                                            text="Submit">Submit</button>
-                                    </div>
-                                </fieldset>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            <!-- </section> -->
-        </script>
-        <script type="text/template" id="tpl_performance_review">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="container">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading" size="H3">VENDOR SERVICE
-                                    ASSESSMENT
-                                    UTILITY</div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <div class="row">
-                                            <div class="panel-heading" size="H4" text="Project Register"></div>
-                                            <div class="panel-body">
-                                                <div class="container-fluid">
-                                                    <div class="row">
-                                                        <div class="col-xs-12">
-                                                            <form role="form">
-                                                                <fieldset>
-                                                                    <div class="row">
-                                                                        <div class="col-lg-12">
-                                                                            <div class="form-group">
-                                                                                <b:SuggestBox limit="9" focus="true"
-                                                                                    addStyleNames="{style.searchBox}" placeholder="Search Projects"
-                                                                                    ui:field='projectSuggestBox'></b:SuggestBox>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <div class="col-lg-12">
-                                                                            <div class="form-group">
-                                                                                <button class="btn btn-primary" ui:field="newProject"
-                                                                                    type="primary">New Project</button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <div class="col-xs-12">
-                                                                            <div class="list-group">
-                                                                                <h4 class="list-group-item-heading" ui:field="projectName">PROJECT: </h4>
-                                                                                <p class="list-group-item-text" ui:field="projectDescription">DESCRIPTION: </p>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <div class="col-lg-4">
-                                                                            <div class="form-group">
-                                                                                <h4 class="list-group-item-heading" ui:field="serviceCatergory">SERVICE
-                                                                                    CATEGORY:
-                                                                                </h4>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-lg-4">
-                                                                            <div class="form-group">
-                                                                                <h4 class="list-group-item-heading" ui:field="serviceProvider">SERVICE
-                                                                                    PROVIDER:
-                                                                                </h4>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-lg-4">
-                                                                            <div class="form-group">
-                                                                                <h4 class="list-group-item-heading" ui:field="customerCompany">CUSTOMER: </h4>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <div class="col-xs-6">
-                                                                            <div class="form-group">
-                                                                                <h5 class="list-group-item-heading" ui:field="plannedStart">PLANNED
-                                                                                    START:
-                                                                                </h5>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-xs-6">
-                                                                            <div class="form-group">
-                                                                                <h5 class="list-group-item-heading" ui:field="actualStart">ACTUAL
-                                                                                    START:
-                                                                                </h5>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <div class="col-xs-6">
-                                                                            <div class="form-group">
-                                                                                <h5 class="list-group-item-heading" ui:field="plannedFinish">PLANNED
-                                                                                    FINISH:
-                                                                                </h5>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-xs-6">
-                                                                            <div class="form-group">
-                                                                                <h5 class="list-group-item-heading" ui:field="actualFinish">ACTUAL
-                                                                                    FINISH:
-                                                                                </h5>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <div class="col-xs-12">
-                                                                            <div class="form-group">
-                                                                                <b.gwt:CellTable ui:field="cellTable" />
-                                                                                <button class="btn btn-primary" type="primary"
-                                                                                    ui:field="save">Save</button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </fieldset>
-                                                            </form>
-                                                            <div class="row">
-                                                                <div class="col-xs-12">
-                                                                    <div class="panel-group" id="accordian">
-                                                                        <div class="panel panel-default">
-                                                                            <div class="panel-heading">
-                                                                                <h4 class="panel-title">
-                                                                                    <a class="accordian=toggle" data-toggle="collapse"
-                                                                                        data-parent="#accordian" href="#collapseOne">
-                                                                                        <span class="glyphicon glyphicon-user"></span>
-                                                                                        Project Lead
-                                                                                    </a>
-                                                                                </h4>
-                                                                            </div>
-                                                                            <div id="collapseOne" class="panel-collapse collapse">
-                                                                                <div class="{style.sbody}">
-                                                                                    <h1 class="{style.sh1}">Pure CSS Star Rating Widget</h1>
-                                                                                    <fieldset id="rating" class="{style.rating}">
-                                                                                        <input class="ratingInput {style.starInput}" type="radio" id="star5" name="rating" value="5" />                 <label class="starLabel {style.star}" for="star5" title="Awesome - 5 stars"></label>
-                                                                                        <input class="ratingInput {style.starInput}" type="radio" id="star4half" name="rating" value="4 and a half" />  <label class="starLabel {style.star} {style.half}" for="star4half" title="Pretty good - 4.5 stars"></label>
-                                                                                        <input class="ratingInput {style.starInput}" type="radio" id="star4" name="rating" value="4" />                     <label class="starLabel {style.star}" for="star4" title="Pretty good - 4 stars"></label>
-                                                                                        <input class="ratingInput {style.starInput}" type="radio" id="star3half" name="rating" value="3 and a half" />  <label class="starLabel {style.star} {style.half}" for="star3half" title="Meh - 3.5 stars"></label>
-                                                                                        <input class="ratingInput {style.starInput}" type="radio" id="star3" name="rating" value="3" />                 <label class="starLabel {style.star}" for="star3" title="Meh - 3 stars"></label>
-                                                                                        <input class="ratingInput {style.starInput}" type="radio" id="star2half" name="rating" value="2 and a half" />  <label class="starLabel {style.star} {style.half}" for="star2half" title="Kinda bad - 2.5 stars"></label>
-                                                                                        <input class="ratingInput {style.starInput}" type="radio" id="star2" name="rating" value="2" />                 <label class="starLabel {style.star}" for="star2" title="Kinda bad - 2 stars"></label>
-                                                                                        <input class="ratingInput {style.starInput}" type="radio" id="star1half" name="rating" value="1 and a half" />  <label class="starLabel {style.star} {style.half}" for="star1half" title="Meh - 1.5 stars"></label>
-                                                                                        <input class="ratingInput {style.starInput}" type="radio" id="star1" name="rating" value="1" />                 <label class="starLabel {style.star}" for="star1" title="Sucks big time - 1 star"></label>
-                                                                                        <input class="ratingInput {style.starInput}" type="radio" id="starhalf" name="rating" value="half" />               <label class="starLabel {style.star} {style.half}"  for="starhalf" title="Sucks big time - 0.5 stars"></label>
-                                                                                    </fieldset>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-        </script>
-        <!-- JavaScript Includes -->
-        <script src="lib/jquery.js"></script>
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
-        <script src="lib/underscore.js"></script>
-        <script src="lib/handlebars-v3.0.0.js"></script>
-        <script src="lib/backbone.js"></script>
-        <script src="lib/backbone-relational.js"></script>
-        <script src="lib/backbone-validation.js"></script>
-        <!-- <script src="lib/backbone-localstorage.js"></script> -->
-        <script src="lib/backbone.localStorage.js"></script>
-        <script src="lib/plugins.js"></script>
-        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-        <script src="lib/modernizr-2.8.3.min.js"></script>
-        <script src="js/all.js"></script>
-        <!-- <script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBdsoKK0wPlfMXjhNEv9y6juA_T2Er0Ek&signed_in=true&libraries=places&callback=app.SignUpView.prototype.initAutocomplete" async defer></script> -->
-        <script src="jasmine/spec/sortyfiedSpec.js"></script>
-
+    
+    
     </body>
 </html>

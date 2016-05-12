@@ -1,13 +1,18 @@
-# Project Overview
+# senior-web-developer-nanodegree-meet-up-event-planner
+1. The app provides a form for users to create an account and sign in.
+2. The app allows users to create a new event and displays the created events in a event list that is hidden by default and can be show and hidden again by clicking on the list icon.
 
 
 # Installation
 
-1. Fork the repository, download it and open the index.html the dist folder in a browser.
+1. Fork the repository, download it and open the index.html in the dist folder in a browser.
 2. Or run the "gulp" command from the root directory in the command line as described below on running the build process step 1.
 
 ## Usage
-1. After the application has been loaded successfully, ........
+1. After the application has been loaded successfully, you may sign up and start using the event planner to create, edit and view events.
+2. Click the list icon to view the list of events created and use the search field above the list displayed on the left to search for a specific event(s).
+3. You may also click on events in the list to view their details and edit if required.
+4. The list is hidden by default you may access it by clicking the list icon in the navigation bar. 
 
 
 ## Contributing
@@ -24,32 +29,40 @@
 
 ## Credits
 
-1. 
+1. The udacity nano degree team provided the guidance and training i required to complete the initial version of this project.
+
 
 ## License
+MIT License
 
+Copyright (c) 2016 Clive Cadogan
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
 
 # How to set up the build process
 
-1. Install gulp globally: sudo npm install --global gulp-cli
-2. Install gulp in project folder: sudo npm install --save-dev gulp
-3. Install gulp-sass in project folder: sudo npm install gulp-sass --save-dev
-4. Install autoprefixer: sudo npm install gulp-autoprefixer --save-dev 
-5. Install browser sync globally: sudo npm install -g browser-sync
-6. Install browser sync in project folder: sudo npm install browser-sync gulp --save-dev
-7. Install eslint: sudo npm install -g eslint
-8. Install sublimelinter-contrib-eslint via package control
-9. Initialize eslint: eslint --init
-10. Install gulp-eslint: sudo npm install gulp-eslint
-11. Install eslint-config-google: sudo npm install --save eslint-config-google
-12. Install gulp-jasmine: sudo npm install gulp-jasmine
-13. Install gulp-concat: sudo npm install gulp-concat
-14. Install gulp-uglify: sudo npm install gulp-uglify
-15. Install gulp-sourcemaps: sudo npm install gulp-sourcemaps
-16. Install gulp-imagemin: sudo npm install --save-dev gulp-imagemin
-17. Install imagemin-pngquant: sudo npm install --save imagemin-pngquant
-18. Install gulp-gh-pages to deploy to gh-pages with "gulp deploy" or "gulp dist" command: sudo npm install --save-dev gulp-gh-pages
+1. Install [npm](https://www.npmjs.com/), [bower](http://bower.io/) and [gulp](http://gulpjs.com/) if you haven't already
+2. Run `npm install`
+3. Run `bower install`
+4. Run the `gulp` command
+5. As you make your edits to the files in `src/`, use `gulp watch` to watch for changes and rebuild to `dist/`.
 
 # Running the Build Process
 
@@ -57,5 +70,5 @@
 2. To process source files for distribution and deploy run the following form root directory on the command line: "gulp dist" this will deploy any updates to the project gh-pages.
 3. While the application is running via the build process several gulp tasks will be watching for changes and errors in the css, js, html and spec files and update the distribution files automatically. The browser will be refreshed for changes to the index.html.
 
-
-npm install backbone-localstorage
+#Versioning
+ Version 1.
