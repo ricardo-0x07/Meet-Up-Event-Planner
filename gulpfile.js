@@ -19,7 +19,7 @@ var imagemin = require('gulp-imagemin');
 var pngquant = require('imagemin-pngquant');
 var ghPages = require('gulp-gh-pages');
 
-gulp.task('default', ['styles', 'lint', 'copy-html', 'vulcanize-elems', 'copy-images', 'scripts', 'copy-spec', 'js'],
+gulp.task('default', ['styles', 'lint', 'copy-html', 'vulcanize-elems', 'copy-images', 'copy-spec', 'js'],
   function() {
     gulp.watch('src/sass/**/*.scss', ['styles']);
     gulp.watch('src/js/**/*.js', ['lint', 'scripts']);
@@ -63,7 +63,6 @@ gulp.task('dist', [
   'copy-images',
   'styles',
   'lint',
-  'scripts-dist',
   'deploy'
 ]);
 

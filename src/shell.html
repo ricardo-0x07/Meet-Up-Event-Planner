@@ -6,36 +6,7 @@
 
     <!-- Templates -->
     <script type="text/template" id="tpl_shell" >
-        <!-- <div class="row"> -->
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-        	<div class="container">
-        		<div class="navbar-header">
-                    <div class="col-xs-12">
-                        <a class="menu-icon-link">
-                            <i class="icon-list">
-                                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                            </i>
-                        </a>                                
-                        <a id="signedInUserLink">
-                            <span id="loggedInUser" class="label label-info"></span>
-                        </a>
-                        <span role="separator" class="divider"></span>
-                        <a href="/#signUp" id="signUp">
-                            <span class="glyphicon glyphicon-user"> SignUp</span>
-                        </a>
-                        <span role="separator" class="divider"></span>
-                        <a href="/#signIn" id="signIn">
-                            <span id="logIn" class="glyphicon glyphicon-log-in"> SignIn</span>
-                        </a>
-                        <span role="separator" class="divider"></span>
-                        <a href="/#signOut" id="signOut">
-                            <span id="signIn" class="glyphicon glyphicon-log-out"> SignOut</span>
-                        </a>
-                    </div>
-        		</div>
-        	</div>
-        </nav>
-        <div class="container-flex">
+        <div class="container-flex menu-hidden">
 	        <div class="slide-menu">
 	            <aside class="sideBar">
 	            </aside>
@@ -47,6 +18,70 @@
 	            </main>
 	        </div>        	
         </div>
+    </script>
+    <script type="text/template" id="tpl_nav">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header ">
+                    <button type="button" class="navbar-toggle collapsed"
+                      data-toggle="collapse" aria-expanded="false" data-Target="#myNavbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                   <!--  <a href="#" class="navbar-brand nav-text" id="brand">
+                      MEET-UP-PLANNER
+                    </a> -->
+                    <a class="menu-icon-link" class="navbar-brand nav-text" >
+                      <i class="icon-list">
+                          <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                      </i>
+                    </a>                                  
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a id="homeLink" href="#" 
+                                role="button" data-toggle="collapse" data-Target="#myNavbar">
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a id="newEventLink" href="/#events/new" 
+                                role="button" data-toggle="collapse" data-Target="#myNavbar">
+                                New Event
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a id="signedInUserLink" data-toggle="collapse" data-Target="#myNavbar">
+                                <span id="loggedInUser" class="label label-info"></span>
+                            </a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="/#signUp" id="signUp" data-toggle="collapse" data-Target="#myNavbar">
+                                <span class="glyphicon glyphicon-user"> SignUp</span>
+                            </a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="/#signIn" id="signIn" data-toggle="collapse" data-Target="#myNavbar">
+                                <span class="glyphicon glyphicon-log-in"> SignIn</span>
+                            </a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="/#signOut" id="signOut" data-toggle="collapse" data-Target="#myNavbar">
+                                <span class="glyphicon glyphicon-log-out"> SignOut</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </script>
     <script id="tpl_contact" type="text/template">
         <img src="{{photo}}" alt="{{name}}" />
@@ -89,25 +124,22 @@
                   <option value="Concert">
                 </datalist>
 			    <paper-input label="Host" class="form-control" type="text" id="host" name="host" placeholder="e.g.: Jane Doe." autocomplete="event-host"  required minlength="8"  error-message="Kindly enter the full name of the event's Host, at least 8 characters long." value="{{host}}"/>
-			    <paper-input label="Start Date" class="form-control" type="datetime-local" id="start" name="start" required error-message="Kindly select a start date and time." value="{{start}}"/>
-			    <paper-input label="End Date" class="form-control" type="datetime-local" id="end" name="end" required error-message="Kindly select a start date and time" value="{{end}}"/>
-			    <iron-label>
-				   <span>Guests</span>
-				   <iron-autogrow-textarea label="Guests" class="form-control" type="text" id="guests" name="end" required placeholder="e.g.: Jane Doe, John Poe, ....."error-message="Kindly enter the full name of the invited guests separated by commas." value="{{guests}}"/>
-				 </iron-label>
+			    <paper-input label="Start Date" class="form-control" type="datetime-local" id="start" name="start" required error-message="Kindly select a start date and time. NB. Event should start some time in the future." value="{{start}}"/>
+			    <paper-input label="End Date" class="form-control" type="datetime-local" id="end" name="end" required error-message="Kindly select a end date and time. NB. Event shouldn't end before it starts" value="{{end}}"/>
+			    <paper-textarea label="Guests" class="form-control" type="text" id="guests" name="end" required minlength="8" placeholder="e.g.: Jane Doe, John Poe, ....." error-message="Kindly enter the full name of the invited guests separated by commas." value="{{guests}}"/>
 			    <paper-input label="Location" class="form-control" type="text" id="address" placeholder="e.g.: 92 Park Street, Chagaunas, Trinidad." autocomplete="address"  required minlength="8"  data-toggle="popover" data-trigger="focus" data-placement="input" error-message="Kindly search for and select the address of the event from the list that appears." value="{{address}}"/>
 			    <iron-label>
 				   <span>Message</span>
 				   <iron-autogrow-textarea class="novalidate-form-input" label="Message" type="text" id="message" name="message" error-message="Kindly fill out this field." value="{{message}}" placeholder="Optional Invitation Message."/>
 				 </iron-label>
                 <div>
-                    <button class="my-button btn btn-primary" type="submit"  id="new" >New</button>
+                    <paper-button raised class="my-button btn btn-primary" type="submit"  id="new" >New</paper-button>
                 </div>
                 <div>
-                    <button class="my-button btn btn-primary" type="submit"  id="save" >Save</button>
+                    <paper-button raised class="my-button btn btn-primary" type="submit"  id="save" >Save</paper-button>
                 </div>
                 <div class="form-group">
-                    <button class="my-button btn btn-primary" class="delete" id="deleteProject">Delete</button>
+                    <paper-button raised class="my-button btn btn-primary" class="delete" id="deleteProject">Delete</paper-button>
                 </div>                            
             </paper-card>
         </form>
@@ -116,8 +148,8 @@
 	    <paper-progress class="transiting" value="0"></paper-progress>
         <form is="iron-form" id="signInForm">
 			<paper-card heading="Log In" id="signIn">
-			    <gold-email-input label="Email" class="form-control" id="email" autofocus autocomplete="email"  error-message="Kindly enter a valid email." placeholder="e.g.: jane.doe@xmail.com." ></gold-email-input>
-			    <paper-input label="Password" class="form-control" type="password" id="password"placeholder="Enter your password" autocomplete="password"  aria-required minlength="8"  class="form-control" error-message="Kindly your password, at leasts 8 characters long consisting of at least one number and letter." />
+			    <gold-email-input label="Email" class="form-control" id="email" autofocus autocomplete="email" required  error-message="Kindly enter a valid email." placeholder="e.g.: jane.doe@xmail.com." ></gold-email-input>
+			    <paper-input label="Password" class="form-control" type="password" id="password"placeholder="Enter your password" autocomplete="password"  required minlength="8"  class="form-control" error-message="Enter password of leasts 8 characters with no special characters, at least one number and letter." />
 			    <!-- <paper-checkbox > Remember me</paper-checkbox> -->
 				<paper-button raised class="btn btn-primary loginButton submit" type="primary" id="button">Log In</paper-button>
 				<paper-button raised class="submit btn btn-primary loginButton" type="primary" id="signUpButton">Sign Up</paper-button>
@@ -200,11 +232,11 @@
         <form id="signUpForm">
             <paper-card heading="Sign Up" id="signUp">
 			    <paper-input label="Full Name" class="form-control" type="text" id="name"placeholder="e.g.: Jane Doe" autofocus autocomplete="name"  required minlength="5"  error-message="Kindly enter your fullname, at least 5 characters long." />
-			    <gold-email-input label="Email" class="form-control" id="email" autocomplete="email"  error-message="Kindly enter a valid email." placeholder="e.g.: jane.doe@xmail.com" ></gold-email-input >
-			    <paper-input label="Employer" class="form-control" type="text" id="employer"placeholder="e.g.: Events inc." autocomplete="employer"  required minlength="5"  error-message="Kindly enter your employers name, at least 5 characters long." />
-			    <paper-input label="Full Address" class="form-control" type="text" id="address" placeholder="e.g.: 92 Park Street, Chaguanas Trinidad." autocomplete="address"  required minlength="8" error-message="Kindly search for and select the address of the event from the list that appears." />
-			    <paper-input label="Choose a Password" class="form-control box" type="password" id="password"placeholder="Kindly enter your choosen password" autocomplete="password"  aria-required minlength="8" error-message="Kindly a password that consist of at least one letter and number and is 8 charaters long." pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" />
-			    <paper-input label="Confirm Choosen Password" class="form-control box" type="password" id="passwordConfirm"placeholder="Kindly confirm the choosen password" aria-required minlength="8" error-message="Kindly a password that consist of at least one letter and number and is 8 charaters long." pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" />
+			    <gold-email-input label="Email" required class="form-control" id="email" autocomplete="email"  error-message="Kindly enter a valid email." placeholder="e.g.: jane.doe@xmail.com" ></gold-email-input >
+			    <paper-input label="Choose a Password" class="form-control" type="password" id="password"placeholder="Kindly enter your choosen password" autocomplete="password"  required minlength="8" error-message="Password must consist of no special characters, at least 1 letter and number is 8 charaters long." pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" />
+			    <paper-input label="Confirm Choosen Password" class="form-control" type="password" id="passwordConfirm"placeholder="Kindly confirm the choosen password" required minlength="8" error-message="Password must consist of no special characters, at least 1 letter and number is 8 charaters long." pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" />
+                <paper-input label="Employer" class="form-control" type="text" id="employer"placeholder="e.g.: Events inc." autocomplete="employer" minlength="5"  error-message="Kindly enter your employers name, at least 5 characters long." />
+                <paper-input label="Full Address" class="form-control" type="text" id="address" placeholder="e.g.: 92 Park Street, Chaguanas Trinidad." autocomplete="address" minlength="8" error-message="Kindly search for and select the address of the event from the list that appears." />
                 <div class="form-group">
 					<paper-button raised class="send btn btn-primary loginButton submit" type="primary" id="submit">Submit</paper-button>
                 </div>

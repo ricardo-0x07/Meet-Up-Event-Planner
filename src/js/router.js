@@ -20,11 +20,13 @@ var ShellView = require('./views/shellView');
 var User = require('./models/user');
 var Event = require('./models/event');
 var Events = require('./collections/events');
+var NavView = require('./views/navigationView');
 
 var Router = Backbone.Router.extend({
 
   initialize: function() {
     options.router = this;
+    $('.navBar').html(new NavView(options).render());
   },
   routes: {
     '': 'home', // Home view
@@ -36,28 +38,32 @@ var Router = Backbone.Router.extend({
   },
 
   home: function() {
-    $('.shell').html(new HomeView(options).render());
+    this.signOut();
+    var homeView = new HomeView(options);
+    // $('.shell').html(new HomeView(options).render());
+    this.showView('.shell', homeView);
   },
   signOut: function() {
     this.loggedInUser = null;
     $('#loggedInUser').text('');
-    $('#signIn').toggle();
-    $('#signUp').toggle();
+    $('#signIn').show();
+    $('#signUp').show();
+    $('#signOut').hide();
+    $('.menu-icon-link').hide();
+    $('#newEventLink').hide();
     this.signIn();
   },
   signUp: function() {
+    this.signOut();
     // Create an instance of sign up view and render
     var signUpView = new SignUpView({
       model: new User()
     }, options);
-    $('.shell').html(signUpView.render());
+    // $('.shell').html(signUpView.render());
+    this.showView('.shell', signUpView);
 
-    // Prevent automatic form submission.
-    document.getElementById('signUpForm').addEventListener('submit', function(event) {
-      event.target.checkValidity();
-      event.preventDefault(); // Prevent form submission and contact with server
-      event.stopPropagation();
-    }, false);
+    // Set focus to the name field
+    document.getElementById('name').$.input.focus();
 
     // Run load load location autocomplete scripts if not loaded already
     signUpView.initAutocomplete();
@@ -71,6 +77,8 @@ var Router = Backbone.Router.extend({
     var inputs = [];
     var increment = 100 / this.$signUpPaperCard.length;
     this.$signUpPaperCard.each(function(index, element) {
+      console.log('element: ');
+      console.log(element);
       inputs.push({element: element, amount: increment});
     });
     this.trackFormProgress(inputs);
@@ -88,7 +96,7 @@ var Router = Backbone.Router.extend({
     }, false);
 
     // Verify that the passwords entered are identical.
-    document.getElementById('passwordConfirm').addEventListener('change', function() {
+    document.getElementById('passwordConfirm').addEventListener('blur', function() {
       if ($('#password').val() !== $('#passwordConfirm').val()) {
         $('#passwordConfirm').attr('invalid', 'true');
         $('#passwordConfirm').attr('error-message', 'Kindly ensure passwords match.');
@@ -104,7 +112,11 @@ var Router = Backbone.Router.extend({
     // Create an instance of sign in view and render
     var signInView = new SignInView({
       model: new User()}, options);
-    $('.shell').html(signInView.render());
+    // $('.shell').html(signInView.render());
+    this.showView('.shell', signInView);
+
+    // Set focus to the email field
+    document.getElementById('email').$.input.focus();
 
     // Prevent automatic form submission.
     document.getElementById('signInForm').addEventListener('submit', function(event) {
@@ -150,6 +162,8 @@ var Router = Backbone.Router.extend({
     // Verify the current user is logged in
     if (this.loggedInUser === null || typeof this.loggedInUser ===	'undefined') {
       console.log('current user is not logged in');
+      this.signOut();
+      this.signIn();
       return;
     }
 
@@ -160,21 +174,26 @@ var Router = Backbone.Router.extend({
 
     // Show selected event details
     var event = Events.get(id);
-    this.showView('.content', new EventView({
-      model: event
-    }, options));
+    var eventView = new EventView({model: event}, options);
+    this.showView('.content', eventView);
+    this.setUpEventView(eventView);
   },
 
   signInUser: function() {
     var name = this.loggedInUser.get('name');
     console.log(name);
     $('#loggedInUser').text(name);
-    $('#signIn').toggle();
-    $('#signUp').toggle();
+    $('#signIn').hide();
+    $('#signUp').hide();
+    $('#signOut').show();
+    $('.menu-icon-link').show();
+    $('#newEventLink').show();
   },
   newEvent: function() {
     // Verify current user is signed in
     if (this.loggedInUser === null || typeof this.loggedInUser ===	'undefined') {
+      console.log('user not logged inXXX');
+      this.signOut();
       this.signIn();
       return;
     }
@@ -183,12 +202,15 @@ var Router = Backbone.Router.extend({
     $('.shell').html(new ShellView().render());
     this.showView('.content', eventView);
     this.eventList();
-    this.signInUser();
+    // this.signInUser();
+    this.setUpEventView(eventView);
+  },
+  setUpEventView: function(eventView) {
     document.getElementById('name').$.input.focus();
     // List of sign up input fields that will be validated
     this.$eventPaperCard = $('paper-card#event .form-control');
 
-    // Here set up to track form completion
+	// Here set up to track form completion
     var inputs = [];
     var increment = 100 / this.$eventPaperCard.length;
     this.$eventPaperCard.each(function(index, element) {
@@ -196,12 +218,12 @@ var Router = Backbone.Router.extend({
     });
     this.trackFormProgress(inputs);
 
-    // Here we set up click event on list menu icon to show and hide event list
+	// Here we set up click event on list menu icon to show and hide event list
     var menuIcon = $('.menu-icon-link');
     menuIcon.on('click', function(event) {
       event.preventDefault(); // Prevent form submission and contact with server
       event.stopPropagation();
-      $('.shell-view').toggleClass('menu-hidden');
+      $('.container-flex').toggleClass('menu-hidden');
     });
 
     // Here we set up date range min constraints for validation
@@ -227,12 +249,6 @@ var Router = Backbone.Router.extend({
     eventView.initAutocomplete();
   },
   showView: function(selector, view) {
-    // Verify current user is signed in
-    if (this.loggedInUser === null || typeof this.loggedInUser ===	'undefined') {
-      console.log('current user is not logged in');
-      this.signIn();
-      return;
-    }
     if (this.currentView) {
       this.currentView.close();
     }
@@ -279,6 +295,12 @@ var Router = Backbone.Router.extend({
       this.inputs.forEach(function(input) {
         input.added = false;
         input.isValid = null;
+        input.element.onkeyup = function() {
+          console.log('onkeyup');
+          this.validate();
+          input.isValid = _this.determineStatus(input);
+          _this.adjustProgressIfNecessary(input);
+        };
         input.element.onblur = function() {
           console.log('onblur');
           this.validate();

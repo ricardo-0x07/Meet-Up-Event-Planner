@@ -15,7 +15,7 @@ module.exports = Backbone.View.extend({
   initialize: function(model, options) {
     // console.log('options: ');
     // console.log(options);
-    this.options = options.router;
+    this.options = options;
     this.listenTo(Events, 'change', this.render);
     this.listenTo(Events, 'add', this.addOne, this);
     this.listenTo(Events, 'reset', this.render);

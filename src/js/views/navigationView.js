@@ -4,20 +4,25 @@ var $ = require('jquery');
 var Handlebars = require('handlebars');
 var Backbone = require('backbone');
 Backbone.$ = $;
+global.jQuery = require('jquery');
+require("bootstrap");
 
 module.exports = Backbone.View.extend({
-  tagName: 'section',
+	// tagName: nav,
 
-  className: 'row shell-view main',
+	// className: 'navBar',
 
-  initialize: function() {
-
+  initialize: function(options) {
+    this.router = options.router;
   },
 
-  template: Handlebars.compile($('#tpl_shell').html()),
+  template: Handlebars.compile($('#tpl_nav').html()),
 
   render: function() {
     $(this.el).html(this.template());
+
     return this.el;
   }
+
 });
+

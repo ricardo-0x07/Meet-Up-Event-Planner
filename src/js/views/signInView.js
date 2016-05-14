@@ -60,6 +60,7 @@ module.exports = Backbone.View.extend({
     console.log('this:');
     console.log(this);
     this.router.loggedInUser = this.model;
+    this.router.signInUser();
     var urlPath = 'events/new';
 
     /* eslint-disable  no-negated-condition */

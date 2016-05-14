@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<!-- saved from url=(0033)http://localhost:3004/#events/new -->
+<html class="no-js" lang=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><!-- Shady DOM styles for custom-style --><!-- Shady DOM styles for dom-template --><!-- Shady DOM styles for dom-repeat --><!-- Shady DOM styles for array-selector --><!-- Shady DOM styles for dom-if --><!-- Shady DOM styles for paper-input-container --><style scope="paper-input-container-0">.paper-input-container-0 {
+  display: block;
+        padding: 8px 0;;
+}
+
+.paper-input-container-0[inline] {
+  display: inline-block;
+}
+
+.paper-input-container-0[disabled] {
+  pointer-events: none;
+        opacity: 0.33;;
+}
+
+.paper-input-container-0 .floated-label-placeholder.paper-input-container {
+  font-family: 'Roboto', 'Noto', sans-serif;
+      -webkit-font-smoothing: antialiased;white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.011em;
+      line-height: 20px;
+}
+
+.paper-input-container-0 .underline.paper-input-container {
+  position: relative;
+}
+
+.paper-input-container-0 .focused-line.paper-input-container {
+  position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+
+        background: #3f51b5;
+        height: 2px;
+
+        -webkit-transform-origin: center center;
+        transform-origin: center center;
+        -webkit-transform: scale3d(0,1,1);
+        transform: scale3d(0,1,1);;
+}
+
+.paper-input-container-0 .underline.is-highlighted.paper-input-container .focused-line.paper-input-container {
+  -webkit-transform: none;
+        transform: none;
+        -webkit-transition: -webkit-transform 0.25s;
+        transition: transform 0.25s;;
+}
+
+.paper-input-container-0 .underline.is-invalid.paper-input-container .focused-line.paper-input-container {
+  background: #dd2c00;
+        -webkit-transform: none;
+        transform: none;
+        -webkit-transition: -webkit-transform 0.25s;
+        transition: transform 0.25s;;
+}
+
+.paper-input-container-0 .unfocused-line.paper-input-container {
+  position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+
+        background: #737373;
+        height: 1px;;
+}
+
+.paper-input-container-0[disabled] .unfocused-line.paper-input-container {
+  border-bottom: 1px dashed;
+        border-color: #737373;
+        background: transparent;;
+}
+
+.paper-input-container-0 .label-and-input-container.paper-input-container {
+  -ms-flex: 1 1 auto;
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;position: relative;
+
+        width: 100%;
+        max-width: 100%;
+}
+
+.paper-input-container-0 .input-content.paper-input-container {
+  display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+
+      -ms-flex-direction: row;
+      -webkit-flex-direction: row;
+      flex-direction: row;-ms-flex-align: center;
+      -webkit-align-items: center;
+      align-items: center;
+
+        position: relative;
+}
+
+.paper-input-container-0 .input-content.paper-input-container  label,.paper-input-container-0  .input-content.paper-input-container  .paper-input-label {
+  position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        width: 100%;
+        font: inherit;
+        color: #737373;
+        -webkit-transition: -webkit-transform 0.25s, width 0.25s;
+        transition: transform 0.25s, width 0.25s;
+        -webkit-transform-origin: left top;
+        transform-origin: left top;white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;font-family: 'Roboto', 'Noto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;;;
+}
+
+.paper-input-container-0 .input-content.label-is-floating.paper-input-container  label,.paper-input-container-0  .input-content.label-is-floating.paper-input-container  .paper-input-label {
+  -webkit-transform: translateY(-75%) scale(0.75);
+        transform: translateY(-75%) scale(0.75);
+
+        
+        width: 133%;;
+}
+
+[dir="rtl"] .paper-input-container-0 .input-content.label-is-floating.paper-input-container  label, .paper-input-container-0[dir="rtl"] .input-content.label-is-floating.paper-input-container  label, [dir="rtl"] .paper-input-container-0 .input-content.label-is-floating.paper-input-container  .paper-input-label,  .paper-input-container-0[dir="rtl"] .input-content.label-is-floating.paper-input-container  .paper-input-label {
+  width: 100%;
+        -webkit-transform-origin: right top;
+        transform-origin: right top;
+}
+
+.paper-input-container-0 .input-content.label-is-highlighted.paper-input-container  label,.paper-input-container-0  .input-content.label-is-highlighted.paper-input-container  .paper-input-label {
+  color: #3f51b5;;
+}
+
+.paper-input-container-0 .input-content.is-invalid.paper-input-container  label,.paper-input-container-0  .input-content.is-invalid.paper-input-container  .paper-input-label {
+  color: #dd2c00;
+}
+
+.paper-input-container-0 .input-content.label-is-hidden.paper-input-container  label,.paper-input-container-0  .input-content.label-is-hidden.paper-input-container  .paper-input-label {
+  visibility: hidden;
+}
+
+.paper-input-container-0 .input-content.paper-input-container  input,.paper-input-container-0  .input-content.paper-input-container  textarea,.paper-input-container-0  .input-content.paper-input-container  iron-autogrow-textarea,.paper-input-container-0  .input-content.paper-input-container  .paper-input-input {
+  position: relative; 
+        outline: none;
+        box-shadow: none;
+        padding: 0;
+        width: 100%;
+        max-width: 100%;
+        background: transparent;
+        border: none;
+        color: #212121;
+        -webkit-appearance: none;
+        text-align: inherit;font-family: 'Roboto', 'Noto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;;
+}
+
+.paper-input-container-0  [prefix] {
+  font-family: 'Roboto', 'Noto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;;-ms-flex: none;
+      -webkit-flex: none;
+      flex: none;
+}
+
+.paper-input-container-0  [suffix] {
+  font-family: 'Roboto', 'Noto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;;-ms-flex: none;
+      -webkit-flex: none;
+      flex: none;
+}
+
+.paper-input-container-0 .input-content.paper-input-container  input {
+  min-width: 0;
+}
+
+.paper-input-container-0 .input-content.paper-input-container  textarea {
+  resize: none;
+}
+
+.paper-input-container-0 .add-on-content.paper-input-container {
+  position: relative;
+}
+
+.paper-input-container-0 .add-on-content.is-invalid.paper-input-container  * {
+  color: #dd2c00;
+}
+
+.paper-input-container-0 .add-on-content.is-highlighted.paper-input-container  * {
+  color: #3f51b5;
+}</style><!-- Shady DOM styles for paper-input-error --><style scope="paper-input-error-0">.paper-input-error-0 {
+  display: inline-block;
+        visibility: hidden;
+
+        color: #dd2c00;font-family: 'Roboto', 'Noto', sans-serif;
+      -webkit-font-smoothing: antialiased;white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.011em;
+      line-height: 20px;;
+        position: absolute;
+        left:0;
+        right:0;
+}
+
+.paper-input-error-0[invalid] {
+  visibility: visible;
+}</style><!-- Shady DOM styles for iron-a11y-announcer --><style scope="iron-a11y-announcer">iron-a11y-announcer {
+  display: inline-block;
+      position: fixed;
+      clip: rect(0px,0px,0px,0px);
+}</style><!-- Shady DOM styles for iron-meta --><!-- Shady DOM styles for iron-meta-query --><!-- Shady DOM styles for iron-input --><!-- Shady DOM styles for iron-icon --><!-- Shady DOM styles for gold-cc-input --><!-- Shady DOM styles for gold-email-input --><style scope="gold-email-input">gold-email-input {
+  display: block;
+}</style><!-- Shady DOM styles for date-validator --><!-- Shady DOM styles for date-input --><!-- Shady DOM styles for gold-cc-expiration-input --><style scope="gold-cc-expiration-input">gold-cc-expiration-input {
+  display: block;
+}</style><!-- Shady DOM styles for gold-cc-cvc-input --><!-- Shady DOM styles for zip-validator --><!-- Shady DOM styles for gold-zip-input --><style scope="gold-zip-input">gold-zip-input {
+  display: block;
+}</style><!-- Shady DOM styles for iron-request --><!-- Shady DOM styles for iron-ajax --><!-- Shady DOM styles for iron-form --><!-- Shady DOM styles for iron-autogrow-textarea --><!-- Shady DOM styles for paper-material --><!-- Shady DOM styles for paper-ripple --><style scope="paper-ripple">paper-ripple {
+  display: block;
+        position: absolute;
+        border-radius: inherit;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        
+        pointer-events: none;
+}
+
+paper-ripple[animating] {
+  -webkit-transform: translate(0, 0);
+        transform: translate3d(0, 0, 0);
+}
+
+#background.paper-ripple, #waves.paper-ripple, .wave-container.paper-ripple, .wave.paper-ripple {
+  pointer-events: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+}
+
+#background.paper-ripple, .wave.paper-ripple {
+  opacity: 0;
+}
+
+#waves.paper-ripple, .wave.paper-ripple {
+  overflow: hidden;
+}
+
+.wave-container.paper-ripple, .wave.paper-ripple {
+  border-radius: 50%;
+}
+
+paper-ripple.circle #background.paper-ripple, paper-ripple.circle #waves.paper-ripple {
+  border-radius: 50%;
+}
+
+paper-ripple.circle .wave-container.paper-ripple {
+  overflow: hidden;
+}</style><!-- Shady DOM styles for paper-button --><style scope="paper-button-0">.paper-button-0 {
+  display: block;
+        position: relative;
+}
+
+.paper-button-0[elevation="1"] {
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+                  0 1px 5px 0 rgba(0, 0, 0, 0.12),
+                  0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+
+.paper-button-0[elevation="2"] {
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14),
+                  0 1px 10px 0 rgba(0, 0, 0, 0.12),
+                  0 2px 4px -1px rgba(0, 0, 0, 0.4);
+}
+
+.paper-button-0[elevation="3"] {
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14),
+                  0 1px 18px 0 rgba(0, 0, 0, 0.12),
+                  0 3px 5px -1px rgba(0, 0, 0, 0.4);
+}
+
+.paper-button-0[elevation="4"] {
+  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
+                  0 3px 14px 2px rgba(0, 0, 0, 0.12),
+                  0 5px 5px -3px rgba(0, 0, 0, 0.4);
+}
+
+.paper-button-0[elevation="5"] {
+  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
+                  0  6px 30px 5px rgba(0, 0, 0, 0.12),
+                  0  8px 10px -5px rgba(0, 0, 0, 0.4);
+}
+
+.paper-button-0[animated] {
+  transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.paper-button-0 {
+  display: inline-block;
+        position: relative;
+        box-sizing: border-box;
+        min-width: 5.14em;
+        margin: 0 0.29em;
+        background: transparent;
+        text-align: center;
+        font: inherit;
+        text-transform: uppercase;
+        outline-width: 0;
+        border-radius: 3px;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
+        cursor: pointer;
+        z-index: 0;
+        padding: 0.7em 0.57em;;
+}
+
+.paper-button-0[raised].keyboard-focus {
+  font-weight: bold;;
+}
+
+.paper-button-0:not([raised]).keyboard-focus {
+  font-weight: bold;;
+}
+
+.paper-button-0[disabled] {
+  background: #eaeaea;
+        color: #a8a8a8;
+        cursor: auto;
+        pointer-events: none;;
+}
+
+.paper-button-0 paper-ripple.paper-button {
+  color:;
+}
+
+.paper-button-0  * {
+  text-transform: inherit;
+}</style><!-- Shady DOM styles for paper-checkbox --><!-- Shady DOM styles for paper-input-char-counter --><!-- Shady DOM styles for paper-input --><style scope="paper-input-0">.paper-input-0 {
+  display: block;
+}
+
+.paper-input-0 input.paper-input::-webkit-input-placeholder {
+  color: #737373;
+}
+
+.paper-input-0 input.paper-input:-moz-placeholder {
+  color: #737373;
+}
+
+.paper-input-0 input.paper-input::-moz-placeholder {
+  color: #737373;
+}
+
+.paper-input-0 input.paper-input:-ms-input-placeholder {
+  color: #737373;
+}</style><!-- Shady DOM styles for paper-header-panel --><style scope="paper-header-panel-0">.paper-header-panel-0 {
+  display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+
+      -ms-flex-direction: column;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+
+        position: relative;
+        height: 100%;;
+}
+
+.paper-header-panel-0 #mainContainer.paper-header-panel {
+  -ms-flex: 1 1 0.000000001px;
+      -webkit-flex: 1;
+      flex: 1;
+      -webkit-flex-basis: 0.000000001px;
+      flex-basis: 0.000000001px;
+
+        position: relative;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+}
+
+.paper-header-panel-0 #mainPanel.paper-header-panel {
+  display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+
+      -ms-flex-direction: column;
+      -webkit-flex-direction: column;
+      flex-direction: column;-ms-flex: 1 1 0.000000001px;
+      -webkit-flex: 1;
+      flex: 1;
+      -webkit-flex-basis: 0.000000001px;
+      flex-basis: 0.000000001px;
+
+        position: relative;
+        min-height: 0;;
+}
+
+.paper-header-panel-0[mode=scroll] #mainContainer.paper-header-panel {
+  ;
+
+        overflow: visible;
+}
+
+.paper-header-panel-0[mode=scroll] {
+  overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+}
+
+.paper-header-panel-0[mode=cover] #mainContainer.paper-header-panel {
+  ;
+
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+}
+
+.paper-header-panel-0[mode=cover] #mainPanel.paper-header-panel {
+  position: static;
+}
+
+.paper-header-panel-0[mode=standard] #mainContainer.paper-header-panel {
+  ;
+}
+
+.paper-header-panel-0[mode=seamed] #mainContainer.paper-header-panel {
+  ;
+}
+
+.paper-header-panel-0[mode=waterfall] #mainContainer.paper-header-panel {
+  ;
+}
+
+.paper-header-panel-0[mode=waterfall-tall] #mainContainer.paper-header-panel {
+  ;
+}
+
+.paper-header-panel-0 #dropShadow.paper-header-panel {
+  transition: opacity 0.5s;
+        height: 6px;
+        box-shadow: inset 0px 5px 6px -3px rgba(0, 0, 0, 0.4);;
+
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        opacity: 0;
+        pointer-events: none;
+}
+
+.paper-header-panel-0 #dropShadow.has-shadow.paper-header-panel {
+  opacity: 1;
+}</style><!-- Shady DOM styles for paper-toolbar --><!-- Shady DOM styles for paper-progress --><style scope="paper-progress-0">.paper-progress-0 {
+  display: block;
+        width: 200px;
+        position: relative;
+        overflow: hidden;
+}
+
+.paper-progress-0 #progressContainer.paper-progress {
+  position: relative;
+}
+
+.paper-progress-0 #progressContainer.paper-progress,.paper-progress-0  .indeterminate.paper-progress::after {
+  height: 4px;
+}
+
+.paper-progress-0 #primaryProgress.paper-progress,.paper-progress-0  #secondaryProgress.paper-progress,.paper-progress-0  .indeterminate.paper-progress::after {
+  position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+}
+
+.paper-progress-0 #progressContainer.paper-progress,.paper-progress-0  .indeterminate.paper-progress::after {
+  background: #e0e0e0;
+}
+
+.paper-progress-0.transiting #primaryProgress.paper-progress, .paper-progress-0.transiting #secondaryProgress.paper-progress {
+  -webkit-transition-property: -webkit-transform;
+        transition-property: transform;
+
+        
+        -webkit-transition-duration: 0.08s;
+        transition-duration: 0.08s;
+
+        
+        -webkit-transition-timing-function: ease;
+        transition-timing-function: ease;
+
+        
+        -webkit-transition-delay: 0s;
+        transition-delay: 0s;
+}
+
+.paper-progress-0 #primaryProgress.paper-progress,.paper-progress-0  #secondaryProgress.paper-progress {
+  position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+        -webkit-transform-origin: left center;
+        transform-origin: left center;
+        -webkit-transform: scaleX(0);
+        transform: scaleX(0);
+        will-change: transform;
+}
+
+.paper-progress-0 #primaryProgress.paper-progress {
+  background: #0f9d58;
+}
+
+.paper-progress-0 #secondaryProgress.paper-progress {
+  background: #b7e1cd;
+}
+
+.paper-progress-0[disabled] #primaryProgress.paper-progress {
+  background: #9e9e9e;
+}
+
+.paper-progress-0[disabled] #secondaryProgress.paper-progress {
+  background: #e0e0e0;
+}
+
+.paper-progress-0:not([disabled]) #primaryProgress.indeterminate.paper-progress {
+  -webkit-transform-origin: right center;
+        transform-origin: right center;
+        -webkit-animation: indeterminate-bar-paper-progress-0 2s linear infinite;
+        animation: indeterminate-bar-paper-progress-0 2s linear infinite;
+}
+
+.paper-progress-0:not([disabled]) #primaryProgress.indeterminate.paper-progress::after {
+  content: "";
+        -webkit-transform-origin: center center;
+        transform-origin: center center;
+
+        -webkit-animation: indeterminate-splitter-paper-progress-0 2s linear infinite;
+        animation: indeterminate-splitter-paper-progress-0 2s linear infinite;
+}
+
+@-webkit-keyframes indeterminate-bar-paper-progress-0 {
+0% {
+  -webkit-transform: scaleX(1) translateX(-100%);
+}
+
+50% {
+  -webkit-transform: scaleX(1) translateX(0%);
+}
+
+75% {
+  -webkit-transform: scaleX(1) translateX(0%);
+          -webkit-animation-timing-function: cubic-bezier(.28,.62,.37,.91);
+}
+
+100% {
+  -webkit-transform: scaleX(0) translateX(0%);
+}
+
+}
+
+@-webkit-keyframes indeterminate-splitter-paper-progress-0 {
+0% {
+  -webkit-transform: scaleX(.75) translateX(-125%);
+}
+
+30% {
+  -webkit-transform: scaleX(.75) translateX(-125%);
+          -webkit-animation-timing-function: cubic-bezier(.42,0,.6,.8);
+}
+
+90% {
+  -webkit-transform: scaleX(.75) translateX(125%);
+}
+
+100% {
+  -webkit-transform: scaleX(.75) translateX(125%);
+}
+
+}
+
+@keyframes indeterminate-bar-paper-progress-0 {
+0% {
+  transform: scaleX(1) translateX(-100%);
+}
+
+50% {
+  transform: scaleX(1) translateX(0%);
+}
+
+75% {
+  transform: scaleX(1) translateX(0%);
+          animation-timing-function: cubic-bezier(.28,.62,.37,.91);
+}
+
+100% {
+  transform: scaleX(0) translateX(0%);
+}
+
+}
+
+@keyframes indeterminate-splitter-paper-progress-0 {
+0% {
+  transform: scaleX(.75) translateX(-125%);
+}
+
+30% {
+  transform: scaleX(.75) translateX(-125%);
+          animation-timing-function: cubic-bezier(.42,0,.6,.8);
+}
+
+90% {
+  transform: scaleX(.75) translateX(125%);
+}
+
+100% {
+  transform: scaleX(.75) translateX(125%);
+}
+
+}</style><!-- Shady DOM styles for iron-image --><style scope="iron-image-0">.iron-image-0 {
+  display: inline-block;
+        overflow: hidden;
+        position: relative;
+}
+
+.iron-image-0 #sizedImgDiv.iron-image {
+  position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+
+        display: none;
+}
+
+.iron-image-0 #img.iron-image {
+  display: block;
+        width: 100%;
+        height: auto;
+}
+
+.iron-image-0[sizing] #sizedImgDiv.iron-image {
+  display: block;
+}
+
+.iron-image-0[sizing] #img.iron-image {
+  display: none;
+}
+
+.iron-image-0 #placeholder.iron-image {
+  position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+
+        background-color: inherit;
+        opacity: 1;;
+}
+
+.iron-image-0 #placeholder.faded-out.iron-image {
+  transition: opacity 0.5s linear;
+        opacity: 0;
+}</style><!-- Shady DOM styles for paper-card --><style scope="paper-card-0">.paper-card-0 {
+  display: block;
+        position: relative;
+}
+
+.paper-card-0[elevation="1"] {
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+                  0 1px 5px 0 rgba(0, 0, 0, 0.12),
+                  0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+
+.paper-card-0[elevation="2"] {
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14),
+                  0 1px 10px 0 rgba(0, 0, 0, 0.12),
+                  0 2px 4px -1px rgba(0, 0, 0, 0.4);
+}
+
+.paper-card-0[elevation="3"] {
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14),
+                  0 1px 18px 0 rgba(0, 0, 0, 0.12),
+                  0 3px 5px -1px rgba(0, 0, 0, 0.4);
+}
+
+.paper-card-0[elevation="4"] {
+  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
+                  0 3px 14px 2px rgba(0, 0, 0, 0.12),
+                  0 5px 5px -3px rgba(0, 0, 0, 0.4);
+}
+
+.paper-card-0[elevation="5"] {
+  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
+                  0  6px 30px 5px rgba(0, 0, 0, 0.12),
+                  0  8px 10px -5px rgba(0, 0, 0, 0.4);
+}
+
+.paper-card-0[animated] {
+  transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.paper-card-0 {
+  display: inline-block;
+        position: relative;
+        box-sizing: border-box;
+        background-color: #ffffff;
+        border-radius: 2px;font-family: 'Roboto', 'Noto', sans-serif;
+      -webkit-font-smoothing: antialiased;;
+}
+
+.paper-card-0 [hidden].paper-card {
+  display: none !important;
+}
+
+.paper-card-0 .header.paper-card {
+  position: relative;
+        border-top-left-radius: inherit;
+        border-top-right-radius: inherit;
+        overflow: hidden;;
+}
+
+.paper-card-0 .header.paper-card iron-image.paper-card {
+  width: 100%;
+        pointer-events: none;;
+}
+
+.paper-card-0 .header.paper-card .title-text.paper-card {
+  padding: 16px;
+        font-size: 24px;
+        font-weight: 400;
+        color: #000;;
+}
+
+.paper-card-0 .header.paper-card .title-text.over-image.paper-card {
+  position: absolute;
+        bottom: 0px;;
+}
+
+.paper-card-0  .card-content {
+  padding: 16px;
+        position:relative;;
+}
+
+.paper-card-0  .card-actions {
+  border-top: 1px solid #e8e8e8;
+        padding: 5px 16px;
+        position:relative;;
+}</style><!-- Shady DOM styles for iron-label -->
+        
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Meet Up Event Planner</title>
+
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="./Meet Up Event Planner_files/css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="http://localhost:3004/apple-touch-icon.png">
+        <link rel="stylesheet" href="./Meet Up Event Planner_files/normalize.css">
+        <link rel="stylesheet" href="./Meet Up Event Planner_files/style.css">
+        <link rel="stylesheet" href="./Meet Up Event Planner_files/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="./Meet Up Event Planner_files/jquery-ui.css">
+        <link rel="stylesheet" href="./Meet Up Event Planner_files/jasmine.css">
+
+        <script>
+            // Only load Web Component polyfill if necessary and then load content
+            // Thanks to Rob Dodson's talk at Chrome Dev Summit 2015
+            var webComponentsSupported = ('registerElement' in document
+                && 'import' in document.createElement('link')
+                && 'content' in document.createElement('template'));
+
+            if (!webComponentsSupported) {
+                var script = document.createElement('script');
+                script.async = true;
+                script.src = '../bower_components/webcomponentsjs/webcomponents-lite.min.js';
+                script.onload = loadPolymerElements;
+                document.head.appendChild(script);
+            } else {
+                loadPolymerElements();
+            };
+
+            function loadPolymerElements() {
+                var link = document.createElement('link');
+                link.rel = 'import';
+                link.href = 'polymer-elements/elements.html'
+                link.onload = loadContent;
+                document.head.appendChild(link);
+            };
+
+            // In an actual app, this would normally be an AJAX request for JSON to be injected into
+            // template app compontents. However, in this case I just hard coded the content.
+            function loadContent() {
+                var req = new XMLHttpRequest();
+                req.open('GET', 'shell.html');
+                req.addEventListener('load', function () {
+                    // // Add Polymer specific classes to the body
+                    document.body.classList.add('fullbleed', 'layout', 'vertical');
+                    document.body.innerHTML = this.responseText;
+                    // document.body.prepend(this.responseText);
+                    // console.log('this.responseText');
+                    // console.log(this.responseText);
+                    loadScripts();
+                    // console.log(document.body.innerHTML);
+                });
+                req.send();
+            };
+
+            // In an actual app, you'd need much more robust logic to determine when and how specific
+            // scripts are injected into the page.
+            function loadScripts() {
+                console.log('loadScripts');                
+                var scripts = [
+                    {
+                        src: 'bundle.js'
+                    }
+                    // ,
+                    // {
+                    //     src: 'http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'
+                    // } 
+                ];
+                scripts.forEach(function (s) {
+                  var script = document.createElement('script');
+                  script.src = s.src;
+                  script.type = "text/javascript";
+                  if (s.attrs) {
+                      s.attrs.forEach(function (a) {
+                        script[a] = true;
+                      });
+                  };
+                  console.log(script.src)
+                  document.body.appendChild(script);
+                });
+            };
+        </script><link rel="import" href="http://localhost:3004/polymer-elements/elements.html">
+
+        <!-- Place favicon.ico in the root directory -->
+
+    </head>
+    <body class="fullbleed layout vertical"><header class="navBar"><div>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header ">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" aria-expanded="false" data-target="#myNavbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                   <!--  <a href="#" class="navbar-brand nav-text" id="brand">
+                      MEET-UP-PLANNER
+                    </a> -->
+                    <a class="menu-icon-link" style="display: none;">
+                      <i class="icon-list">
+                          <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                      </i>
+                    </a>                                  
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a id="homeLink" href="http://localhost:3004/#" role="button" data-toggle="collapse" data-target="#myNavbar">
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a id="newEventLink" href="http://localhost:3004/#events/new" role="button" data-toggle="collapse" data-target="#myNavbar" style="display: none;">
+                                New Event
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a id="signedInUserLink" data-toggle="collapse" data-target="#myNavbar">
+                                <span id="loggedInUser" class="label label-info"></span>
+                            </a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="http://localhost:3004/#signUp" id="signUp" data-toggle="collapse" data-target="#myNavbar">
+                                <span class="glyphicon glyphicon-user"> SignUp</span>
+                            </a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="http://localhost:3004/#signIn" id="signIn" data-toggle="collapse" data-target="#myNavbar">
+                                <span class="glyphicon glyphicon-log-in"> SignIn</span>
+                            </a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="http://localhost:3004/#signOut" id="signOut" data-toggle="collapse" data-target="#myNavbar" style="display: none;">
+                                <span class="glyphicon glyphicon-log-out"> SignOut</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div></header>
+<paper-header-panel mode="seamed" class="shell x-scope paper-header-panel-0" at-top=""><section class="layout vertical polymer-main main">
+	    <paper-progress class="transiting x-scope paper-progress-0" value="50" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" aria-disabled="false">
+    
+
+    <div id="progressContainer" class="style-scope paper-progress">
+      <div id="secondaryProgress" class="style-scope paper-progress" hidden="" style="transform: scaleX(0);"></div>
+      <div id="primaryProgress" class="style-scope paper-progress" style="transform: scaleX(0.5);"></div>
+    </div>
+  </paper-progress>
+        <form is="iron-form" id="signInForm">
+			<paper-card heading="Log In" id="signIn" aria-label="Log In" elevation="1" class="x-scope paper-card-0">
+    
+
+    <div class="header style-scope paper-card">
+      <iron-image class="style-scope paper-card x-scope iron-image-0" hidden="">
+    
+
+    <div id="sizedImgDiv" role="img" class="style-scope iron-image" aria-label="" hidden=""></div>
+    <img id="img" class="style-scope iron-image">
+    <div id="placeholder" class="style-scope iron-image" hidden=""></div>
+  </iron-image>
+      <div class="title-text style-scope paper-card">Log In</div>
+    </div>
+
+    
+			    <gold-email-input label="Email" class="form-control" id="email" autofocus="" autocomplete="email" error-message="Kindly enter a valid email." placeholder="e.g.: jane.doe@xmail.com." tabindex="0" aria-disabled="false">
+
+    
+
+    <paper-input-container id="container" class="style-scope gold-email-input x-scope paper-input-container-0">
+    
+
+    
+      <div class="floated-label-placeholder style-scope paper-input-container">&nbsp;</div>
+    <template is="dom-if" class="style-scope paper-input-container"></template>
+
+    <div class="input-content label-is-floating style-scope paper-input-container">
+      
+
+      <div class="label-and-input-container style-scope paper-input-container" id="labelAndInputContainer" style="position: static;">
+        <label class="style-scope gold-email-input" id="paper-input-label-3">Email</label><input is="iron-input" id="input" type="email" validator="email-validator" autocomplete="email" autocapitalize="none" class="style-scope gold-email-input" placeholder="e.g.: jane.doe@xmail.com." aria-describedby="error" aria-labelledby="paper-input-label-3" autofocus=""><template is="dom-if" class="style-scope gold-email-input"></template>
+      </div>
+
+      
+    </div>
+
+    <div class="underline style-scope paper-input-container">
+      <div class="unfocused-line style-scope paper-input-container"></div>
+      <div class="focused-line style-scope paper-input-container"></div>
+    </div>
+
+    <div class="add-on-content style-scope paper-input-container">
+      <paper-input-error id="error" class="style-scope gold-email-input x-scope paper-input-error-0" add-on="">
+    
+
+    Kindly enter a valid email.
+  </paper-input-error>
+    </div>
+  </paper-input-container>
+  </gold-email-input>
+			    <paper-input label="Password" class="form-control x-scope paper-input-0" type="password" id="password" placeholder="Enter your password" autocomplete="password" aria-required="" minlength="8" error-message="Enter password of leasts 8 characters with no special characters, at least one number and letter." tabindex="0" aria-disabled="false">
+    
+
+    <paper-input-container class="style-scope paper-input x-scope paper-input-container-0">
+    
+
+    
+      <div class="floated-label-placeholder style-scope paper-input-container">&nbsp;</div>
+    <template is="dom-if" class="style-scope paper-input-container"></template>
+
+    <div class="input-content label-is-floating is-invalid style-scope paper-input-container">
+      
+
+      <div class="label-and-input-container style-scope paper-input-container" id="labelAndInputContainer" style="position: static;">
+        <label class="style-scope paper-input" id="paper-input-label-4">Password</label><input is="iron-input" id="input" class="style-scope paper-input" autocomplete="password" placeholder="Enter your password" autocapitalize="none" autocorrect="off" aria-describedby="paper-input-add-on-1" aria-labelledby="paper-input-label-4" type="password" minlength="8" tabindex="0" invalid="" aria-invalid="true"><template is="dom-if" class="style-scope paper-input"></template><template is="dom-if" class="style-scope paper-input"></template>
+      </div>
+
+      
+    </div>
+
+    <div class="underline is-invalid style-scope paper-input-container">
+      <div class="unfocused-line style-scope paper-input-container"></div>
+      <div class="focused-line style-scope paper-input-container"></div>
+    </div>
+
+    <div class="add-on-content is-invalid style-scope paper-input-container">
+      <paper-input-error class="style-scope paper-input x-scope paper-input-error-0" add-on="" id="paper-input-add-on-1" invalid="">
+    
+
+    Enter password of leasts 8 characters with no special characters, at least one number and letter.
+  </paper-input-error>
+    </div>
+  </paper-input-container>
+  </paper-input>
+			    <!-- <paper-checkbox > Remember me</paper-checkbox> -->
+				<paper-button raised="" class="btn btn-primary loginButton submit x-scope paper-button-0" type="primary" id="button" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" style="
+    padding-top: 25px;
+">Log In</paper-button>
+				<paper-button raised="" class="submit btn btn-primary loginButton x-scope paper-button-0" type="primary" id="signUpButton" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1">Sign Up</paper-button>
+				<!-- <paper-button raised class="submit btn btn-primary loginButton" type="primary" id="anchorForgottenPassword">Forgot your password ?</paper-button> -->
+			
+  </paper-card>
+        </form>
+    </section></paper-header-panel>
+<!-- <footer></footer> -->
+
+    <!-- Templates -->
+    <script type="text/template" id="tpl_shell">
+        <!-- <div class="row"> -->
+        <!-- <nav class="navbar navbar navbar-fixed-top">
+        	<div class="container">
+        		<div class="navbar-header">
+                    <div class="col-xs-12">
+                        <a class="menu-icon-link">
+                            <i class="icon-list">
+                                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                            </i>
+                        </a>                                
+                    </div>
+        		</div>
+        	</div>
+        </nav> -->
+        <div class="container-flex">
+	        <div class="slide-menu">
+	            <aside class="sideBar">
+	            </aside>
+	        </div>
+	        <div class="section">
+	            <main class="content">
+	                <h2>Welcome to Sortyfied.com</h2>
+	                <p>This is Your Ultimate Event Planning Utility</p>
+	            </main>
+	        </div>        	
+        </div>
+    </script>
+    <script type="text/template" id="tpl_nav">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header ">
+                    <button type="button" class="navbar-toggle collapsed"
+                      data-toggle="collapse" aria-expanded="false" data-Target="#myNavbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                   <!--  <a href="#" class="navbar-brand nav-text" id="brand">
+                      MEET-UP-PLANNER
+                    </a> -->
+                    <a class="menu-icon-link" class="navbar-brand nav-text" >
+                      <i class="icon-list">
+                          <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                      </i>
+                    </a>                                  
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a id="homeLink" href="#" 
+                                role="button" data-toggle="collapse" data-Target="#myNavbar">
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a id="newEventLink" href="/#events/new" 
+                                role="button" data-toggle="collapse" data-Target="#myNavbar">
+                                New Event
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a id="signedInUserLink" data-toggle="collapse" data-Target="#myNavbar">
+                                <span id="loggedInUser" class="label label-info"></span>
+                            </a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="/#signUp" id="signUp" data-toggle="collapse" data-Target="#myNavbar">
+                                <span class="glyphicon glyphicon-user"> SignUp</span>
+                            </a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="/#signIn" id="signIn" data-toggle="collapse" data-Target="#myNavbar">
+                                <span class="glyphicon glyphicon-log-in"> SignIn</span>
+                            </a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="/#signOut" id="signOut" data-toggle="collapse" data-Target="#myNavbar">
+                                <span class="glyphicon glyphicon-log-out"> SignOut</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </script>
+    <script id="tpl_contact" type="text/template">
+        <img src="{{photo}}" alt="{{name}}" />
+        <h1>{{name}}</h1>
+        <dl>
+            <dt>Tel:</dt><dd>{{tel}}</dd>
+            <dt>Email:</dt><dd><a href="#">{{email}}</a></dd>
+        </dl>
+    </script>
+    <script type="text/html" id="tpl_aside">
+        <form class="navbar-form" role="search">
+            <div >
+              <paper-input placeholder="Search" type="search" class="filter">
+            </div><!-- /input-group -->
+        </form><!-- /.navbar-form -->
+        <ul class="event_list list-group" ></ul>
+    </script>
+    <script type="text/template" id="tpl_event_list_element">
+        <paper-card heading="Event: {{name}}">
+            <paper-item raised class="projectName">Description: {{description}}</paper-item>
+            <paper-item raised>Type: {{type}}</paper-item>
+            <paper-item raised>Host: {{host}}</paper-item>
+            <paper-item raised>Date: {{start}}</paper-item>
+        </paper-card>
+    </script>
+    <script type="text/template" id="tpl_event">
+	    <paper-progress class="transiting" value="0"></paper-progress>
+        <form is="iron-form" id="eventForm">
+            <paper-card heading="Event" id="event">
+			    <paper-input label="Event Name" autocapitalize="autocapitalize" class="form-control" type="text" id="name" placeholder="e.g.: User Conference" autofocus autocomplete="event-name"  required minlength="8"  error-message="Kindly enter the events name, at least 8 characters long." value="{{name}}"/>
+			    <paper-input label="Description" class="form-control" type="text" id="description"placeholder="e.g.: Annual Widget Users Conference" autocomplete="event-description"  required minlength="8" error-message="Kindly enter a description of the event, at least 8 characters long." value="{{description}}"/>
+			    <paper-input label="Event Type" class="form-control" list="eventTypes" type="text" id="type"placeholder="e.g.: Conference"  autocomplete="event-type"  required error-message="Kindly eneter or select a type of your event." value="{{type}}"/>
+                <datalist id="eventTypes">
+                  <option value="Birthday Party">
+                  <option value="Conference">
+                  <option value="Wedding">
+                  <option value="Lime">
+                  <option value="Farewell;">
+                  <option value="Baby Shower">
+                  <option value="Concert">
+                </datalist>
+			    <paper-input label="Host" class="form-control" type="text" id="host" name="host" placeholder="e.g.: Jane Doe." autocomplete="event-host"  required minlength="8"  error-message="Kindly enter the full name of the event's Host, at least 8 characters long." value="{{host}}"/>
+			    <paper-input label="Start Date" class="form-control" type="datetime-local" id="start" name="start" required error-message="Kindly select a start date and time. NB. Event should start some time in the future." value="{{start}}"/>
+			    <paper-input label="End Date" class="form-control" type="datetime-local" id="end" name="end" required error-message="Kindly select a end date and time. NB. Event shouldn't end before it starts" value="{{end}}"/>
+			    <iron-label>
+				   <span>Guests</span>
+				   <iron-autogrow-textarea label="Guests" class="form-control" type="text" id="guests" name="end" required minlength="8" placeholder="e.g.: Jane Doe, John Poe, ....."error-message="Kindly enter the full name of the invited guests separated by commas." value="{{guests}}"/>
+				 </iron-label>
+			    <paper-input label="Location" class="form-control" type="text" id="address" placeholder="e.g.: 92 Park Street, Chagaunas, Trinidad." autocomplete="address"  required minlength="8"  data-toggle="popover" data-trigger="focus" data-placement="input" error-message="Kindly search for and select the address of the event from the list that appears." value="{{address}}"/>
+			    <iron-label>
+				   <span>Message</span>
+				   <iron-autogrow-textarea class="novalidate-form-input" label="Message" type="text" id="message" name="message" error-message="Kindly fill out this field." value="{{message}}" placeholder="Optional Invitation Message."/>
+				 </iron-label>
+                <div>
+                    <button class="my-button btn btn-primary" type="submit"  id="new" >New</button>
+                </div>
+                <div>
+                    <button class="my-button btn btn-primary" type="submit"  id="save" >Save</button>
+                </div>
+                <div class="form-group">
+                    <button class="my-button btn btn-primary" class="delete" id="deleteProject">Delete</button>
+                </div>                            
+            </paper-card>
+        </form>
+    </script>
+    <script type="text/template" id="tpl_signIn">
+	    <paper-progress class="transiting" value="0"></paper-progress>
+        <form is="iron-form" id="signInForm">
+			<paper-card heading="Log In" id="signIn">
+			    <gold-email-input label="Email" class="form-control" id="email" autofocus autocomplete="email"  error-message="Kindly enter a valid email." placeholder="e.g.: jane.doe@xmail.com." ></gold-email-input>
+			    <paper-input label="Password" class="form-control" type="password" id="password"placeholder="Enter your password" autocomplete="password"  aria-required minlength="8"  class="form-control" error-message="Enter password of leasts 8 characters with no special characters, at least one number and letter." />
+			    <!-- <paper-checkbox > Remember me</paper-checkbox> -->
+				<paper-button raised class="btn btn-primary loginButton submit" type="primary" id="button">Log In</paper-button>
+				<paper-button raised class="submit btn btn-primary loginButton" type="primary" id="signUpButton">Sign Up</paper-button>
+				<!-- <paper-button raised class="submit btn btn-primary loginButton" type="primary" id="anchorForgottenPassword">Forgot your password ?</paper-button> -->
+			</paper-card>
+        </form>
+    </script>
+    <script type="text/template" id="tpl_home_marketing">
+        <!-- <div class="row"> -->
+        <div class="col-xs-12">
+            <div id="carousel-captions" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel-captions" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-captions" data-slide-to="1"></li>
+                    <li data-target="#carousel-captions" data-slide-to="2"></li>
+                </ol>
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+                    <div class="item active">
+                        <img id="imgA" width="100%" src="img/event1.jpg" alt="Responsive image"  class="carouselImage" />
+                        <div class="carousel-caption">
+                            <h3 text="Issue Management" />
+                            <p> Lets Take the stress of your shoulders.
+                            </p>
+                            <p>
+                              <button id="signUpA" type="button" class="signUp btn btn-primary">Sign up today</button>
+                            </p>
+                            <p>
+                              <button id="signInA" type="button" class="signIn btn btn-primary">Sign In</button> 
+                            </p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img id="imgB" width="100%" src="img/event2.jpg" alt="Responsive image" class="carouselImage" />
+                        <div class="carousel-caption">
+                            <h3 text="Performance Management" />
+                            <p>
+                            We do every events right!.
+                            </p>
+                            <p>
+                              <button id="signUpB"  type="button" class="signUp btn btn-primary">Sign up today</button>
+                            </p>
+                            <p>
+                              <button id="signInB"  type="button" class="signIn btn btn-primary">Sign In</button>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img id="imgC" width="100%" src="img/event3.jpg" alt="Responsive image" class="carouselImage" />
+                        <div class="carousel-caption">
+                            <h3 text="Search" />
+                            <p>
+                                Lets Help You Plan the Next one.                                
+                            </p>
+                            <p>
+                              <button id="signUpC" type="button" class="signUp btn btn-primary">Sign up today</button>
+                            </p>
+                            <p>
+                              <button id="signInC" type="button" class="signIn btn btn-primary">Sign In</button>   
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Controls -->
+                <a class="left carousel-control" href="#carousel-captions" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#carousel-captions" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+        <!-- </div> -->
+    </script>
+    <script type="text/template" id="tpl_signUp">
+	    <paper-progress class="transiting" value="0"></paper-progress>
+        <form id="signUpForm">
+            <paper-card heading="Sign Up" id="signUp">
+			    <paper-input label="Full Name" class="form-control" type="text" id="name"placeholder="e.g.: Jane Doe" autofocus autocomplete="name"  required minlength="5"  error-message="Kindly enter your fullname, at least 5 characters long." />
+			    <gold-email-input label="Email" required class="form-control" id="email" autocomplete="email"  error-message="Kindly enter a valid email." placeholder="e.g.: jane.doe@xmail.com" ></gold-email-input >
+			    <paper-input label="Choose a Password" class="form-control" type="password" id="password"placeholder="Kindly enter your choosen password" autocomplete="password"  required minlength="8" error-message="Password must consist of no special characters, at least 1 letter and number is 8 charaters long." pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" />
+			    <paper-input label="Confirm Choosen Password" class="form-control" type="password" id="passwordConfirm"placeholder="Kindly confirm the choosen password" required minlength="8" error-message="Password must consist of no special characters, at least 1 letter and number is 8 charaters long." pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" />
+                <paper-input label="Employer" class="form-control" type="text" id="employer"placeholder="e.g.: Events inc." autocomplete="employer" minlength="5"  error-message="Kindly enter your employers name, at least 5 characters long." />
+                <paper-input label="Full Address" class="form-control" type="text" id="address" placeholder="e.g.: 92 Park Street, Chaguanas Trinidad." autocomplete="address" minlength="8" error-message="Kindly search for and select the address of the event from the list that appears." />
+                <div class="form-group">
+					<paper-button raised class="send btn btn-primary loginButton submit" type="primary" id="submit">Submit</paper-button>
+                </div>
+            </paper-card>
+        </form>
+    </script>
+<script src="./Meet Up Event Planner_files/bundle.js" type="text/javascript"></script><iron-a11y-announcer>
+    <div class="style-scope iron-a11y-announcer" aria-live="polite"></div>
+  </iron-a11y-announcer><div style="display: block;"></div></body></html>

@@ -95,7 +95,7 @@ textarea {
    Author's custom styles
    ========================================================================== */
 .main {
-    padding-top: 60px !important;
+    padding-top: 50px !important;
 }
 
 .polymer-main {
@@ -217,7 +217,7 @@ paper-card:last-of-type {
 .container-flex {
     // display: inline-flex;
     // flex-direction: row;
-    padding-top: 20px;
+    // padding-top: 20px;
 }
 
 .content {
@@ -236,7 +236,7 @@ body {
 }
 
 paper-progress {
-    padding-top: 65px;
+    // padding-top: 65px;
     width: 100% !important;
     position: fixed;
     z-index: 999;
@@ -284,6 +284,35 @@ a {
     padding-right: 16px;
 }
 
+
+paper-input> paper-input-container> div> paper-input-error {
+
+    // --paper-input-error: {
+      // position: relative !important; // or  width: 60px;
+      height: 50px;
+      white-space: normal !important;
+      word-wrap: break-word;
+      line-height: normal !important;
+    // }
+}
+
+paper-textarea> paper-input-container> div> paper-input-error {
+
+    // --paper-input-error: {
+      // position: relative !important; // or  width: 60px;
+      height: 50px;
+      white-space: normal !important;
+      word-wrap: break-word;
+      line-height: normal !important;
+    // }
+}
+paper-input, gold-email-input, paper-textarea {
+    padding-bottom: 20px !important;
+}
+
+.btn-primary {
+    margin-top: 15px !important;
+}
 
 
 

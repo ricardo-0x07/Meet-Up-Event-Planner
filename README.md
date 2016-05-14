@@ -56,6 +56,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
+## changelog
+2016-05-14: m 
+
+1. Improved logical order for the inputs for signUpView.
+2. Improve visibility of validation messages on small devices.
+3. Implemented navigation menu that helps user navigate on different pages.
+4. Attempted to improved validation messaging.
+5. Improved consistency of auto focus functionality.
+6. Improved input design.
+7. Addressed issue of missing dependencies in package.json.
+
+
 # How to set up the build process
 
 1. Install [npm](https://www.npmjs.com/), [bower](http://bower.io/) and [gulp](http://gulpjs.com/) if you haven't already
@@ -71,4 +83,6 @@ SOFTWARE.
 3. While the application is running via the build process several gulp tasks will be watching for changes and errors in the css, js, html and spec files and update the distribution files automatically. The browser will be refreshed for changes to the index.html.
 
 #Versioning
- Version 1.
+ Version 2. 
+
+ 1. Implemented some ui design improvements.

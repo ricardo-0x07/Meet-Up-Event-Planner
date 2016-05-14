@@ -18,7 +18,8 @@ module.exports = Backbone.View.extend({
     this.router.navigate('events/' + this.model.id, {trigger: true});
   },
 
-  initialize: function() {
+  initialize: function(model, options) {
+    this.router = options.router;
     this.listenTo(this.model, 'change', this.render);
   },
 
@@ -40,10 +41,10 @@ module.exports = Backbone.View.extend({
     $(this.el).html(this.template(this.model.toJSON()));
 
     // TODO set up click event to select project to be edited or deleted
-    $(this.el).click(_this.model, function() {
+    $(this.el).click(_this, function() {
       $('.shell-view').toggleClass('menu-hidden');
       // console.log('project: '+ _this.model.name +' selected.');
-      this.router.navigate('events/' + _this.model.id, {trigger: true});
+      _this.router.navigate('events/' + _this.model.id, {trigger: true});
     });
 
     return this.el;
