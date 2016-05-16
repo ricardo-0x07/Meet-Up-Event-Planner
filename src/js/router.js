@@ -27,6 +27,14 @@ var Router = Backbone.Router.extend({
   initialize: function() {
     options.router = this;
     $('.navBar').html(new NavView(options).render());
+    // Here we set up click event on list menu icon to show and hide event list
+    var menuIcon = $('.menu-icon-link');
+    menuIcon.on('click', function(event) {
+      event.preventDefault(); // Prevent form submission and contact with server
+      event.stopPropagation();
+      console.log('menuIcon clicked');
+      $('.shell').toggleClass('menu-hidden');
+    });
   },
   routes: {
     '': 'home', // Home view
@@ -175,6 +183,8 @@ var Router = Backbone.Router.extend({
     // Show selected event details
     var event = Events.get(id);
     var eventView = new EventView({model: event}, options);
+    $('.shell').html(new ShellView().render());
+    this.eventList();
     this.showView('.content', eventView);
     this.setUpEventView(eventView);
   },
@@ -200,12 +210,13 @@ var Router = Backbone.Router.extend({
     // Create an instance of the eventView view and render`
     var eventView = new EventView({model: new Event()}, options);
     $('.shell').html(new ShellView().render());
-    this.showView('.content', eventView);
     this.eventList();
-    // this.signInUser();
+    this.showView('.content', eventView);
     this.setUpEventView(eventView);
   },
   setUpEventView: function(eventView) {
+    $('.shell').addClass('menu-hidden');
+
     document.getElementById('name').$.input.focus();
     // List of sign up input fields that will be validated
     this.$eventPaperCard = $('paper-card#event .form-control');
@@ -217,14 +228,6 @@ var Router = Backbone.Router.extend({
       inputs.push({element: element, amount: increment});
     });
     this.trackFormProgress(inputs);
-
-	// Here we set up click event on list menu icon to show and hide event list
-    var menuIcon = $('.menu-icon-link');
-    menuIcon.on('click', function(event) {
-      event.preventDefault(); // Prevent form submission and contact with server
-      event.stopPropagation();
-      $('.container-flex').toggleClass('menu-hidden');
-    });
 
     // Here we set up date range min constraints for validation
     $('paper-input#start').on('focus', function() {

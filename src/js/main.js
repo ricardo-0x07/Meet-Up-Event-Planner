@@ -21,6 +21,7 @@ Backbone.View.prototype.close = function() {
 
   this.remove();
   this.unbind();
+  this.off();
 };
 
 $('body').on('click', '.back-button', function(event) {

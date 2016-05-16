@@ -28,6 +28,7 @@ Backbone.View.prototype.close = function() {
 
   this.remove();
   this.unbind();
+  this.off();
 };
 
 $('body').on('click', '.back-button', function(event) {
@@ -67,6 +68,14 @@ var Router = Backbone.Router.extend({
   initialize: function() {
     options.router = this;
     $('.navBar').html(new NavView(options).render());
+    // Here we set up click event on list menu icon to show and hide event list
+    var menuIcon = $('.menu-icon-link');
+    menuIcon.on('click', function(event) {
+      event.preventDefault(); // Prevent form submission and contact with server
+      event.stopPropagation();
+      console.log('menuIcon clicked');
+      $('.shell').toggleClass('menu-hidden');
+    });
   },
   routes: {
     '': 'home', // Home view
@@ -215,6 +224,8 @@ var Router = Backbone.Router.extend({
     // Show selected event details
     var event = Events.get(id);
     var eventView = new EventView({model: event}, options);
+    $('.shell').html(new ShellView().render());
+    this.eventList();
     this.showView('.content', eventView);
     this.setUpEventView(eventView);
   },
@@ -240,12 +251,13 @@ var Router = Backbone.Router.extend({
     // Create an instance of the eventView view and render`
     var eventView = new EventView({model: new Event()}, options);
     $('.shell').html(new ShellView().render());
-    this.showView('.content', eventView);
     this.eventList();
-    // this.signInUser();
+    this.showView('.content', eventView);
     this.setUpEventView(eventView);
   },
   setUpEventView: function(eventView) {
+    $('.shell').addClass('menu-hidden');
+
     document.getElementById('name').$.input.focus();
     // List of sign up input fields that will be validated
     this.$eventPaperCard = $('paper-card#event .form-control');
@@ -257,14 +269,6 @@ var Router = Backbone.Router.extend({
       inputs.push({element: element, amount: increment});
     });
     this.trackFormProgress(inputs);
-
-	// Here we set up click event on list menu icon to show and hide event list
-    var menuIcon = $('.menu-icon-link');
-    menuIcon.on('click', function(event) {
-      event.preventDefault(); // Prevent form submission and contact with server
-      event.stopPropagation();
-      $('.container-flex').toggleClass('menu-hidden');
-    });
 
     // Here we set up date range min constraints for validation
     $('paper-input#start').on('focus', function() {
@@ -405,40 +409,6 @@ var SingletonRouter = function() {
 module.exports = new SingletonRouter();
 
 
- /* global module, require */
-'use strict';
-
-var $ = require('jquery');
-var Backbone = require('backbone');
-Backbone.$ = $;
-Backbone.LocalStorage = require("backbone.localstorage");
-var Event = require('../models/event');
-
-var Events = Backbone.Collection.extend({
-  url: '/allEvents',
-  localStorage: new Backbone.LocalStorage('EventCollection'),
-  model: Event
-});
-
-module.exports = new Events();
-
- /* global module, require */
-'use strict';
-
-var $ = require('jquery');
-var Backbone = require('backbone');
-Backbone.$ = $;
-Backbone.LocalStorage = require('backbone.localstorage');
-var User = require('../models/user');
-
-var Users = Backbone.Collection.extend({
-  url: '/allUsers',
-  localStorage: new Backbone.LocalStorage('UserCollection'),
-  model: User
-});
-
-module.exports = new Users();
-
  /* global module, require, console */
 'use strict';
 var $ = require('jquery');// (window);
@@ -531,6 +501,8 @@ module.exports = Backbone.View.extend({
 
   addOne: function(event) {
     // var _this = this;
+    console.log('In addOne');
+    console.log(event.get('name') + 'added');
     var eventSummaryView = new EventSummaryView({model: event}, this.options);
     $('.event_list').prepend(eventSummaryView.render());
   },
@@ -673,13 +645,21 @@ module.exports = Backbone.View.extend({
 
     });
 
+    console.log('this.fullAddress');
+    console.log(this.fullAddress);
+    console.log('this.componentForm');
+    console.log(this.componentForm);
+
     if (this.model.isNew()) {
       var _this = this;
       Events.create(this.model, {
         wait: true,    // waits for server to respond with 200 before adding newly created model to collection
         success: function() {
           // Navigate to project details to allow editing or deleting of project
-          _this.router.navigate('events/' + _this.model.id, {trigger: true});
+          // _this.router.navigate('events/' + _this.model.id, {trigger: true});
+
+          // Navigate to new event place
+          _this.newEvent();
         },
         error: function(err) {
           console.log('error callback');
@@ -725,21 +705,23 @@ module.exports = Backbone.View.extend({
       // location types.
       _this.autocomplete = new google.maps.places.Autocomplete(
       (document.getElementById('address').$.input),
-      {types: ['geocode']});
+      {types: ['address']});
       // When the user selects an address from the dropdown, populate the address
       // fields in the form.
       // this.autocomplete.addListener('place_changed', this.fillInAddress);
       google.maps.event.addListener(_this.autocomplete, 'place_changed', function() {
         // Get the place details from the autocomplete object.
         var place = _this.autocomplete.getPlace();
-
+        // set formatted address to input field and validate
+        $('#address').val(place.formatted_address);
+        document.getElementById('address').validate();
         // Get each component of the address from the place detail
         // and fill the corresponding field on the form.
         for (var i = 0; i < place.address_components.length; i++) {
           var addressType = place.address_components[i].types[0];
           if (_this.componentForm[addressType]) {
             var val = place.address_components[i][_this.componentForm[addressType]];
-            _this.fullAddress[addressType] = val;
+            _this.fullAddress.push({addressType: val});
           }
         }
       });
@@ -753,7 +735,7 @@ module.exports = Backbone.View.extend({
     country: 'long_name',
     postalCode: 'short_name'},
 
-  fullAddress: {},
+  fullAddress: [],
 
   fillInAddress: function() {
     // Get the place details from the autocomplete object.
@@ -784,6 +766,7 @@ module.exports = Backbone.View.extend({
           center: geolocation,
           radius: position.coords.accuracy
         });
+        console.log('geolocation');
         _this.autocomplete.setBounds(circle.getBounds());
       });
     }
@@ -1100,3 +1083,37 @@ module.exports = Backbone.View.extend({
     return false;
   }
 });
+
+ /* global module, require */
+'use strict';
+
+var $ = require('jquery');
+var Backbone = require('backbone');
+Backbone.$ = $;
+Backbone.LocalStorage = require("backbone.localstorage");
+var Event = require('../models/event');
+
+var Events = Backbone.Collection.extend({
+  url: '/allEvents',
+  localStorage: new Backbone.LocalStorage('EventCollection'),
+  model: Event
+});
+
+module.exports = new Events();
+
+ /* global module, require */
+'use strict';
+
+var $ = require('jquery');
+var Backbone = require('backbone');
+Backbone.$ = $;
+Backbone.LocalStorage = require('backbone.localstorage');
+var User = require('../models/user');
+
+var Users = Backbone.Collection.extend({
+  url: '/allUsers',
+  localStorage: new Backbone.LocalStorage('UserCollection'),
+  model: User
+});
+
+module.exports = new Users();
