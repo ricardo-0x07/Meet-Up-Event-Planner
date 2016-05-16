@@ -81,7 +81,6 @@ module.exports = Backbone.View.extend({
   // as supplied by the browser's 'navigator.geolocation' object.
   geolocate: function() {
     var _this = this;
-    console.log('geolocate');
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
         var geolocation = {
@@ -109,7 +108,19 @@ module.exports = Backbone.View.extend({
     'click #submit': 'submit'
   },
 
-  submit: function() {
+  submit: function(e) {
+    // Prevent automatic form submission.
+    var $signUpPaperCard = $('paper-card#signUp .form-control');
+    if (!document.getElementById('signUpForm').checkValidity()) {
+      e.preventDefault(); // Prevent form submission and contact with server
+      e.stopPropagation();
+      // List of sign up input fields that will be validated
+      $signUpPaperCard.each(function(index, element) {
+        element.validate();
+      });
+      return;
+    }
+
     if ($('#password').val() !== $('#passwordConfirm').val()) {
       $('#passwordConfirm').attr('invalid', 'true');
       $('#passwordConfirm').attr('error-message', 'Kindly ensure passwords match.');

@@ -33,7 +33,6 @@ module.exports = Backbone.View.extend({
   },
 
   newEvent: function() {
-    console.log('newEvent');
     var urlPath = 'events/new';
 
     /* eslint-disable  no-negated-condition */
@@ -46,7 +45,17 @@ module.exports = Backbone.View.extend({
     return false;
   },
   save: function(e) {
-    e.preventDefault();
+    // Prevent automatic form submission.
+    var $eventPaperCard = $('paper-card#event .form-control');
+    if (!document.getElementById('eventForm').checkValidity()) {
+      e.preventDefault(); // Prevent form submission and contact with server
+      e.stopPropagation();
+      // List of sign up input fields that will be validated
+      $eventPaperCard.each(function(index, element) {
+        element.validate();
+      });
+      return;
+    }
 
     if ($('#start').val() > $('#end').val()) {
       $('#end').attr('error-message', 'Kindly ensure that your start date and time is before the end date and time.');
@@ -66,11 +75,6 @@ module.exports = Backbone.View.extend({
       message: $('#message').val()
 
     });
-
-    console.log('this.fullAddress');
-    console.log(this.fullAddress);
-    console.log('this.componentForm');
-    console.log(this.componentForm);
 
     if (this.model.isNew()) {
       var _this = this;
@@ -188,7 +192,6 @@ module.exports = Backbone.View.extend({
           center: geolocation,
           radius: position.coords.accuracy
         });
-        console.log('geolocation');
         _this.autocomplete.setBounds(circle.getBounds());
       });
     }

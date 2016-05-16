@@ -43,7 +43,7 @@ Backbone.history.start();
 
 /* jslint browser:true*/
 /* eslint-disable no-unused-vars*/
-/* global window, $, google, document, ko, Backbone, Handlebars, navigator, require */
+/* global window, $, google, document, ko, Backbone, Handlebars, navigator, require, module */
 /* eslint no-negated-condition: 2*/
 
 var _ = require('underscore');
@@ -73,7 +73,6 @@ var Router = Backbone.Router.extend({
     menuIcon.on('click', function(event) {
       event.preventDefault(); // Prevent form submission and contact with server
       event.stopPropagation();
-      console.log('menuIcon clicked');
       $('.shell').toggleClass('menu-hidden');
     });
   },
@@ -156,23 +155,20 @@ var Router = Backbone.Router.extend({
 
   signIn: function() {
     var _this = this;
-    console.log('_this: ');
-    console.log(_this);
     // Create an instance of sign in view and render
     var signInView = new SignInView({
       model: new User()}, options);
-    // $('.shell').html(signInView.render());
     this.showView('.shell', signInView);
 
     // Set focus to the email field
     document.getElementById('email').$.input.focus();
 
     // Prevent automatic form submission.
-    document.getElementById('signInForm').addEventListener('submit', function(event) {
-      event.target.checkValidity();
-      event.preventDefault(); // Prevent form submission and contact with server
-      event.stopPropagation();
-    }, false);
+    // document.getElementById('signInForm').addEventListener('submit', function(event) {
+    //   event.target.checkValidity();
+    //   event.preventDefault(); // Prevent form submission and contact with server
+    //   event.stopPropagation();
+    // }, false);
 
     // List of sign in input fields that will be validated
     this.$signInPaperCard = $('paper-card#signIn .form-control');
@@ -227,12 +223,47 @@ var Router = Backbone.Router.extend({
     $('.shell').html(new ShellView().render());
     this.eventList();
     this.showView('.content', eventView);
-    this.setUpEventView(eventView);
+    // this.setUpEventView(eventView);
+    $('.shell').addClass('menu-hidden');
+
+    document.getElementById('name').$.input.focus();
+    // List of sign up input fields that will be validated
+    this.$eventPaperCard = $('paper-card#event .form-control');
+
+  // Here set up to track form completion
+    var inputs = [];
+    var increment = 100 / this.$eventPaperCard.length;
+    this.$eventPaperCard.each(function(index, element) {
+      inputs.push({element: element, amount: increment});
+    });
+    this.trackFormProgress(inputs);
+
+    // Here we set up date range min constraints for validation
+    $('paper-input#start').on('focus', function() {
+      var currentDateTime = new Date();
+      $('paper-input#start').attr('min', currentDateTime.toLocaleString());
+    });
+    $('paper-input#start').on('change', function() {
+      $('paper-input#end').attr('min', $('paper-input#start').val());
+    });
+
+    document.getElementById('address').addEventListener('focus', function() {
+      eventView.geolocate();
+    }, false);
+
+    // Prevent automatic form submission.
+    // document.getElementById('eventForm').addEventListener('submit', function(event) {
+    //   console.log('event form submission');
+    //   event.target.checkValidity();
+    //   event.preventDefault(); // Prevent form submission and contact with server
+    //   event.stopPropagation();
+    // }, false);
+
+    eventView.initAutocomplete();
   },
 
   signInUser: function() {
     var name = this.loggedInUser.get('name');
-    console.log(name);
     $('#loggedInUser').text(name);
     $('#signIn').hide();
     $('#signUp').hide();
@@ -243,7 +274,6 @@ var Router = Backbone.Router.extend({
   newEvent: function() {
     // Verify current user is signed in
     if (this.loggedInUser === null || typeof this.loggedInUser ===	'undefined') {
-      console.log('user not logged inXXX');
       this.signOut();
       this.signIn();
       return;
@@ -253,7 +283,43 @@ var Router = Backbone.Router.extend({
     $('.shell').html(new ShellView().render());
     this.eventList();
     this.showView('.content', eventView);
-    this.setUpEventView(eventView);
+    // this.setUpEventView(eventView);
+    $('.shell').addClass('menu-hidden');
+
+    document.getElementById('name').$.input.focus();
+    // List of sign up input fields that will be validated
+    this.$eventPaperCard = $('paper-card#event .form-control');
+
+  // Here set up to track form completion
+    var inputs = [];
+    var increment = 100 / this.$eventPaperCard.length;
+    this.$eventPaperCard.each(function(index, element) {
+      inputs.push({element: element, amount: increment});
+    });
+    this.trackFormProgress(inputs);
+
+    // Here we set up date range min constraints for validation
+    $('paper-input#start').on('focus', function() {
+      var currentDateTime = new Date();
+      $('paper-input#start').attr('min', currentDateTime.toLocaleString());
+    });
+    $('paper-input#start').on('change', function() {
+      $('paper-input#end').attr('min', $('paper-input#start').val());
+    });
+
+    document.getElementById('address').addEventListener('focus', function() {
+      eventView.geolocate();
+    }, false);
+
+    // Prevent automatic form submission.
+    // document.getElementById('eventForm').addEventListener('submit', function(event) {
+    //   console.log('event form submission');
+    //   event.target.checkValidity();
+    //   event.preventDefault(); // Prevent form submission and contact with server
+    //   event.stopPropagation();
+    // }, false);
+
+    eventView.initAutocomplete();
   },
   setUpEventView: function(eventView) {
     $('.shell').addClass('menu-hidden');
@@ -283,12 +349,13 @@ var Router = Backbone.Router.extend({
       eventView.geolocate();
     }, false);
 
-    // Prevent automatic form submission.
-    document.getElementById('eventForm').addEventListener('submit', function(event) {
-      event.target.checkValidity();
-      event.preventDefault(); // Prevent form submission and contact with server
-      event.stopPropagation();
-    }, false);
+    // // Prevent automatic form submission.
+    // document.getElementById('eventForm').addEventListener('submit', function(event) {
+    //   console.log('event form submission');
+    //   event.target.checkValidity();
+    //   event.preventDefault(); // Prevent form submission and contact with server
+    //   event.stopPropagation();
+    // }, false);
 
     eventView.initAutocomplete();
   },
@@ -322,16 +389,13 @@ var Router = Backbone.Router.extend({
     selector.isFieldsetValid();
   },
   trackFormProgress: function(inputs) {
-    console.log('progressBar: ');
     // Set up the logic to change the progress bar
     var progressBar = document.querySelector('paper-progress.transiting');
-    console.log(progressBar);
     /** @description Track the progress of the form
     * @param {number} inputs - list of inputs for validation tracking.
     * @param {object} progressBar - progress bar to be updated
     */
     function ProgressTracker(inputs, progressBar) {
-      console.log('ProgressTracker');
       var _this = this;
       this.progressBar = progressBar;
       this.inputs = inputs;
@@ -340,13 +404,11 @@ var Router = Backbone.Router.extend({
         input.added = false;
         input.isValid = null;
         input.element.onkeyup = function() {
-          console.log('onkeyup');
           this.validate();
           input.isValid = _this.determineStatus(input);
           _this.adjustProgressIfNecessary(input);
         };
         input.element.onblur = function() {
-          console.log('onblur');
           this.validate();
           input.isValid = _this.determineStatus(input);
           _this.adjustProgressIfNecessary(input);
@@ -381,8 +443,6 @@ var Router = Backbone.Router.extend({
         } else if (!input.added && input.isValid) {
           newAmount += input.amount;
           input.added = true;
-          console.log('valid input:');
-          console.log(input);
         }
 
         this.progressBar.value = newAmount;
@@ -398,16 +458,47 @@ var _instance;
 
 var SingletonRouter = function() {
   if (_instance === undefined) {
-    console.log('_instance undefined');
     _instance = new Router();
   }
-  console.log('returning _instance: ');
-  console.log(_instance);
   return _instance;
 };
 
 module.exports = new SingletonRouter();
 
+
+ /* global module, require */
+'use strict';
+
+var $ = require('jquery');
+var Backbone = require('backbone');
+Backbone.$ = $;
+Backbone.LocalStorage = require("backbone.localstorage");
+var Event = require('../models/event');
+
+var Events = Backbone.Collection.extend({
+  url: '/allEvents',
+  localStorage: new Backbone.LocalStorage('EventCollection'),
+  model: Event
+});
+
+module.exports = new Events();
+
+ /* global module, require */
+'use strict';
+
+var $ = require('jquery');
+var Backbone = require('backbone');
+Backbone.$ = $;
+Backbone.LocalStorage = require('backbone.localstorage');
+var User = require('../models/user');
+
+var Users = Backbone.Collection.extend({
+  url: '/allUsers',
+  localStorage: new Backbone.LocalStorage('UserCollection'),
+  model: User
+});
+
+module.exports = new Users();
 
  /* global module, require, console */
 'use strict';
@@ -489,8 +580,6 @@ module.exports = Backbone.View.extend({
 
     $('paper-input.filter').on('keyup', function() {
       var filter = this.value;
-      console.log('filter: ');
-      console.log(filter);
       if (filter) {
         $('.event_list').html('');
         _this.filterList(filter);
@@ -501,8 +590,6 @@ module.exports = Backbone.View.extend({
 
   addOne: function(event) {
     // var _this = this;
-    console.log('In addOne');
-    console.log(event.get('name') + 'added');
     var eventSummaryView = new EventSummaryView({model: event}, this.options);
     $('.event_list').prepend(eventSummaryView.render());
   },
@@ -611,7 +698,6 @@ module.exports = Backbone.View.extend({
   },
 
   newEvent: function() {
-    console.log('newEvent');
     var urlPath = 'events/new';
 
     /* eslint-disable  no-negated-condition */
@@ -624,7 +710,17 @@ module.exports = Backbone.View.extend({
     return false;
   },
   save: function(e) {
-    e.preventDefault();
+    // Prevent automatic form submission.
+    var $eventPaperCard = $('paper-card#event .form-control');
+    if (!document.getElementById('eventForm').checkValidity()) {
+      e.preventDefault(); // Prevent form submission and contact with server
+      e.stopPropagation();
+      // List of sign up input fields that will be validated
+      $eventPaperCard.each(function(index, element) {
+        element.validate();
+      });
+      return;
+    }
 
     if ($('#start').val() > $('#end').val()) {
       $('#end').attr('error-message', 'Kindly ensure that your start date and time is before the end date and time.');
@@ -644,11 +740,6 @@ module.exports = Backbone.View.extend({
       message: $('#message').val()
 
     });
-
-    console.log('this.fullAddress');
-    console.log(this.fullAddress);
-    console.log('this.componentForm');
-    console.log(this.componentForm);
 
     if (this.model.isNew()) {
       var _this = this;
@@ -766,7 +857,6 @@ module.exports = Backbone.View.extend({
           center: geolocation,
           radius: position.coords.accuracy
         });
-        console.log('geolocation');
         _this.autocomplete.setBounds(circle.getBounds());
       });
     }
@@ -864,7 +954,7 @@ module.exports = Backbone.View.extend({
 });
 
 'use strict';
-/* global require, module */
+/* global require, module, document */
 var $ = require('jquery');
 var Handlebars = require('handlebars');
 var Backbone = require('backbone');
@@ -878,12 +968,7 @@ module.exports = Backbone.View.extend({
   className: 'layout vertical polymer-main main',
 
   initialize: function(model, options) {
-    // console.log('options: ');
-    // console.log(options);
-    // this.model = options.router;
     this.router = options.router;
-    console.log('XXthis: ');
-    console.log(this);
     this.listenTo(this.model, 'change', this.render);
   },
 
@@ -903,10 +988,20 @@ module.exports = Backbone.View.extend({
   signUp: function() {
     this.router.navigate('signUp', {trigger: true});
   },
-  submit: function() {
+  submit: function(e) {
+    // Prevent automatic form submission.
+    var $signInPaperCard = $('paper-card#signIn .form-control');
+    if (!document.getElementById('signInForm').checkValidity()) {
+      e.preventDefault(); // Prevent form submission and contact with server
+      e.stopPropagation();
+      // List of sign up input fields that will be validated
+      $signInPaperCard.each(function(index, element) {
+        element.validate();
+      });
+      return;
+    }
+
     Users.fetch({reset: true});
-    console.log('Users.toJSON(): ');
-    console.log(Users.toJSON());
     var formValues = {
       email: $('#email').val(),
       password: $('#password').val()
@@ -922,8 +1017,6 @@ module.exports = Backbone.View.extend({
       $('#password').attr('error-message', 'Kindly verify you have entered the correct password.');
       return;
     }
-    console.log('this:');
-    console.log(this);
     this.router.loggedInUser = this.model;
     this.router.signInUser();
     var urlPath = 'events/new';
@@ -1020,7 +1113,6 @@ module.exports = Backbone.View.extend({
   // as supplied by the browser's 'navigator.geolocation' object.
   geolocate: function() {
     var _this = this;
-    console.log('geolocate');
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
         var geolocation = {
@@ -1048,7 +1140,19 @@ module.exports = Backbone.View.extend({
     'click #submit': 'submit'
   },
 
-  submit: function() {
+  submit: function(e) {
+    // Prevent automatic form submission.
+    var $signUpPaperCard = $('paper-card#signUp .form-control');
+    if (!document.getElementById('signUpForm').checkValidity()) {
+      e.preventDefault(); // Prevent form submission and contact with server
+      e.stopPropagation();
+      // List of sign up input fields that will be validated
+      $signUpPaperCard.each(function(index, element) {
+        element.validate();
+      });
+      return;
+    }
+
     if ($('#password').val() !== $('#passwordConfirm').val()) {
       $('#passwordConfirm').attr('invalid', 'true');
       $('#passwordConfirm').attr('error-message', 'Kindly ensure passwords match.');
@@ -1083,37 +1187,3 @@ module.exports = Backbone.View.extend({
     return false;
   }
 });
-
- /* global module, require */
-'use strict';
-
-var $ = require('jquery');
-var Backbone = require('backbone');
-Backbone.$ = $;
-Backbone.LocalStorage = require("backbone.localstorage");
-var Event = require('../models/event');
-
-var Events = Backbone.Collection.extend({
-  url: '/allEvents',
-  localStorage: new Backbone.LocalStorage('EventCollection'),
-  model: Event
-});
-
-module.exports = new Events();
-
- /* global module, require */
-'use strict';
-
-var $ = require('jquery');
-var Backbone = require('backbone');
-Backbone.$ = $;
-Backbone.LocalStorage = require('backbone.localstorage');
-var User = require('../models/user');
-
-var Users = Backbone.Collection.extend({
-  url: '/allUsers',
-  localStorage: new Backbone.LocalStorage('UserCollection'),
-  model: User
-});
-
-module.exports = new Users();

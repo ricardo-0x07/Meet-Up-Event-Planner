@@ -2,7 +2,7 @@
 
 /* jslint browser:true*/
 /* eslint-disable no-unused-vars*/
-/* global window, $, google, document, ko, Backbone, Handlebars, navigator, require */
+/* global window, $, google, document, ko, Backbone, Handlebars, navigator, require, module */
 /* eslint no-negated-condition: 2*/
 
 var _ = require('underscore');
@@ -32,7 +32,6 @@ var Router = Backbone.Router.extend({
     menuIcon.on('click', function(event) {
       event.preventDefault(); // Prevent form submission and contact with server
       event.stopPropagation();
-      console.log('menuIcon clicked');
       $('.shell').toggleClass('menu-hidden');
     });
   },
@@ -115,23 +114,20 @@ var Router = Backbone.Router.extend({
 
   signIn: function() {
     var _this = this;
-    console.log('_this: ');
-    console.log(_this);
     // Create an instance of sign in view and render
     var signInView = new SignInView({
       model: new User()}, options);
-    // $('.shell').html(signInView.render());
     this.showView('.shell', signInView);
 
     // Set focus to the email field
     document.getElementById('email').$.input.focus();
 
     // Prevent automatic form submission.
-    document.getElementById('signInForm').addEventListener('submit', function(event) {
-      event.target.checkValidity();
-      event.preventDefault(); // Prevent form submission and contact with server
-      event.stopPropagation();
-    }, false);
+    // document.getElementById('signInForm').addEventListener('submit', function(event) {
+    //   event.target.checkValidity();
+    //   event.preventDefault(); // Prevent form submission and contact with server
+    //   event.stopPropagation();
+    // }, false);
 
     // List of sign in input fields that will be validated
     this.$signInPaperCard = $('paper-card#signIn .form-control');
@@ -186,12 +182,47 @@ var Router = Backbone.Router.extend({
     $('.shell').html(new ShellView().render());
     this.eventList();
     this.showView('.content', eventView);
-    this.setUpEventView(eventView);
+    // this.setUpEventView(eventView);
+    $('.shell').addClass('menu-hidden');
+
+    document.getElementById('name').$.input.focus();
+    // List of sign up input fields that will be validated
+    this.$eventPaperCard = $('paper-card#event .form-control');
+
+  // Here set up to track form completion
+    var inputs = [];
+    var increment = 100 / this.$eventPaperCard.length;
+    this.$eventPaperCard.each(function(index, element) {
+      inputs.push({element: element, amount: increment});
+    });
+    this.trackFormProgress(inputs);
+
+    // Here we set up date range min constraints for validation
+    $('paper-input#start').on('focus', function() {
+      var currentDateTime = new Date();
+      $('paper-input#start').attr('min', currentDateTime.toLocaleString());
+    });
+    $('paper-input#start').on('change', function() {
+      $('paper-input#end').attr('min', $('paper-input#start').val());
+    });
+
+    document.getElementById('address').addEventListener('focus', function() {
+      eventView.geolocate();
+    }, false);
+
+    // Prevent automatic form submission.
+    // document.getElementById('eventForm').addEventListener('submit', function(event) {
+    //   console.log('event form submission');
+    //   event.target.checkValidity();
+    //   event.preventDefault(); // Prevent form submission and contact with server
+    //   event.stopPropagation();
+    // }, false);
+
+    eventView.initAutocomplete();
   },
 
   signInUser: function() {
     var name = this.loggedInUser.get('name');
-    console.log(name);
     $('#loggedInUser').text(name);
     $('#signIn').hide();
     $('#signUp').hide();
@@ -202,7 +233,6 @@ var Router = Backbone.Router.extend({
   newEvent: function() {
     // Verify current user is signed in
     if (this.loggedInUser === null || typeof this.loggedInUser ===	'undefined') {
-      console.log('user not logged inXXX');
       this.signOut();
       this.signIn();
       return;
@@ -212,7 +242,43 @@ var Router = Backbone.Router.extend({
     $('.shell').html(new ShellView().render());
     this.eventList();
     this.showView('.content', eventView);
-    this.setUpEventView(eventView);
+    // this.setUpEventView(eventView);
+    $('.shell').addClass('menu-hidden');
+
+    document.getElementById('name').$.input.focus();
+    // List of sign up input fields that will be validated
+    this.$eventPaperCard = $('paper-card#event .form-control');
+
+  // Here set up to track form completion
+    var inputs = [];
+    var increment = 100 / this.$eventPaperCard.length;
+    this.$eventPaperCard.each(function(index, element) {
+      inputs.push({element: element, amount: increment});
+    });
+    this.trackFormProgress(inputs);
+
+    // Here we set up date range min constraints for validation
+    $('paper-input#start').on('focus', function() {
+      var currentDateTime = new Date();
+      $('paper-input#start').attr('min', currentDateTime.toLocaleString());
+    });
+    $('paper-input#start').on('change', function() {
+      $('paper-input#end').attr('min', $('paper-input#start').val());
+    });
+
+    document.getElementById('address').addEventListener('focus', function() {
+      eventView.geolocate();
+    }, false);
+
+    // Prevent automatic form submission.
+    // document.getElementById('eventForm').addEventListener('submit', function(event) {
+    //   console.log('event form submission');
+    //   event.target.checkValidity();
+    //   event.preventDefault(); // Prevent form submission and contact with server
+    //   event.stopPropagation();
+    // }, false);
+
+    eventView.initAutocomplete();
   },
   setUpEventView: function(eventView) {
     $('.shell').addClass('menu-hidden');
@@ -242,12 +308,13 @@ var Router = Backbone.Router.extend({
       eventView.geolocate();
     }, false);
 
-    // Prevent automatic form submission.
-    document.getElementById('eventForm').addEventListener('submit', function(event) {
-      event.target.checkValidity();
-      event.preventDefault(); // Prevent form submission and contact with server
-      event.stopPropagation();
-    }, false);
+    // // Prevent automatic form submission.
+    // document.getElementById('eventForm').addEventListener('submit', function(event) {
+    //   console.log('event form submission');
+    //   event.target.checkValidity();
+    //   event.preventDefault(); // Prevent form submission and contact with server
+    //   event.stopPropagation();
+    // }, false);
 
     eventView.initAutocomplete();
   },
@@ -281,16 +348,13 @@ var Router = Backbone.Router.extend({
     selector.isFieldsetValid();
   },
   trackFormProgress: function(inputs) {
-    console.log('progressBar: ');
     // Set up the logic to change the progress bar
     var progressBar = document.querySelector('paper-progress.transiting');
-    console.log(progressBar);
     /** @description Track the progress of the form
     * @param {number} inputs - list of inputs for validation tracking.
     * @param {object} progressBar - progress bar to be updated
     */
     function ProgressTracker(inputs, progressBar) {
-      console.log('ProgressTracker');
       var _this = this;
       this.progressBar = progressBar;
       this.inputs = inputs;
@@ -299,13 +363,11 @@ var Router = Backbone.Router.extend({
         input.added = false;
         input.isValid = null;
         input.element.onkeyup = function() {
-          console.log('onkeyup');
           this.validate();
           input.isValid = _this.determineStatus(input);
           _this.adjustProgressIfNecessary(input);
         };
         input.element.onblur = function() {
-          console.log('onblur');
           this.validate();
           input.isValid = _this.determineStatus(input);
           _this.adjustProgressIfNecessary(input);
@@ -340,8 +402,6 @@ var Router = Backbone.Router.extend({
         } else if (!input.added && input.isValid) {
           newAmount += input.amount;
           input.added = true;
-          console.log('valid input:');
-          console.log(input);
         }
 
         this.progressBar.value = newAmount;
@@ -357,11 +417,8 @@ var _instance;
 
 var SingletonRouter = function() {
   if (_instance === undefined) {
-    console.log('_instance undefined');
     _instance = new Router();
   }
-  console.log('returning _instance: ');
-  console.log(_instance);
   return _instance;
 };
 

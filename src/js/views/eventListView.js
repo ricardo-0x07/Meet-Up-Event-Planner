@@ -31,8 +31,6 @@ module.exports = Backbone.View.extend({
 
     $('paper-input.filter').on('keyup', function() {
       var filter = this.value;
-      console.log('filter: ');
-      console.log(filter);
       if (filter) {
         $('.event_list').html('');
         _this.filterList(filter);
@@ -43,8 +41,6 @@ module.exports = Backbone.View.extend({
 
   addOne: function(event) {
     // var _this = this;
-    console.log('In addOne');
-    console.log(event.get('name') + 'added');
     var eventSummaryView = new EventSummaryView({model: event}, this.options);
     $('.event_list').prepend(eventSummaryView.render());
   },
